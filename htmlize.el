@@ -6,7 +6,7 @@
 ;; Homepage: https://github.com/hniksic/emacs-htmlize
 ;; Keywords: hypermedia, extensions
 ;; Version: 1.58
-;; Package-Requires: ((emacs "25.1"))
+;; Package-Requires: ((emacs "26.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -1347,7 +1347,7 @@ overlays that specify `face'."
 That means that GENERATOR will be evaluated and returned the first time
 it's called with the same value of KEY.  All other times, the cached
 \(memoized) value will be returned."
-  (let ((value (cl-gensym)))
+  (let ((value (gensym)))
     `(let ((,value (gethash ,key htmlize-memoization-table)))
        (unless ,value
          (setq ,value ,generator)
@@ -1555,7 +1555,7 @@ it's called with the same value of KEY.  All other times, the cached
           (let* ((buffer-faces (htmlize-faces-in-buffer))
                  (face-map (htmlize-make-face-map
                             (cl-adjoin 'default buffer-faces)))
-                 (places (cl-gensym))
+                 (places (gensym))
                  (title (if (buffer-file-name)
                             (file-name-nondirectory (buffer-file-name))
                           (buffer-name))))
