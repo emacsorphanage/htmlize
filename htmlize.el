@@ -587,7 +587,8 @@ list."
           ((plist-get imgprops :data)
            (let ((image-type (plist-get imgprops :type)))
              (format "<img src=\"data:image/%s;base64,%s\"%s />"
-                     (or (alist-get image-type htmlize-image-mime-type-alist) image-type "")
+                     (or (alist-get image-type htmlize-image-mime-type-alist)
+                         image-type "")
                      (base64-encode-string (plist-get imgprops :data))
                      alt-attr))))))
 
