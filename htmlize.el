@@ -303,8 +303,8 @@ This variable can be also be `let' bound when running `htmlize-buffer'.")
   "The mode the newly created HTML buffer will be put in.
 Set this to nil if you prefer the default (fundamental) mode."
   :type '(radio (const :tag "No mode (fundamental)" nil)
-                 (function-item html-mode)
-                 (function :tag "User-defined major mode"))
+                (function-item html-mode)
+                (function :tag "User-defined major mode"))
   :group 'htmlize)
 
 (defcustom htmlize-pre-style nil
@@ -403,7 +403,7 @@ https://www.iana.org/assignments/media-types/media-types.xhtml#image")
      ;; Not escaping '"' buys us a measurable speedup.  It's only
      ;; necessary to quote it for strings used in attribute values,
      ;; which htmlize doesn't typically do.
-     ;(aref table ?\") "&quot;"
+     ;; (aref table ?\") "&quot;"
      )
     table))
 
