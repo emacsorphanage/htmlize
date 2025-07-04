@@ -369,14 +369,6 @@ https://www.iana.org/assignments/media-types/media-types.xhtml#image")
       (setq pos (next-single-char-property-change pos 'display nil limit)))
     pos))
 
-(defmacro htmlize-lexlet (&rest letforms)
-  (declare (indent 1) (debug let))
-  (if (and (boundp 'lexical-binding)
-           lexical-binding)
-      `(let ,@letforms)
-    ;; cl extensions have a macro implementing lexical let
-    `(lexical-let ,@letforms)))
-
 
 ;;; Transformation of buffer text: HTML escapes, untabification, etc.
 
@@ -1441,11 +1433,9 @@ it's called with the same value of KEY.  All other times, the cached
     (princ "<span class=\"" buffer)
     (princ (htmlize-fstruct-css-name fstruct) buffer)
     (princ "\">" buffer))
-  (htmlize-lexlet ((fstruct-list fstruct-list) (buffer buffer))
-    (lambda ()
-      (dolist (fstruct fstruct-list)
-        (ignore fstruct)                ; shut up the byte-compiler
-        (princ "</span>" buffer)))))
+  (lambda ()
+    (dolist (_fstruct fstruct-list)
+      (princ "</span>" buffer))))
 
 
 ;;; `inline-css' output support.
@@ -1476,10 +1466,9 @@ it's called with the same value of KEY.  All other times, the cached
       (princ "<span style=\"" buffer)
       (princ style buffer)
       (princ "\">" buffer))
-    (htmlize-lexlet ((style style) (buffer buffer))
-      (lambda ()
-        (when style
-          (princ "</span>" buffer))))))
+    (lambda ()
+      (when style
+        (princ "</span>" buffer)))))
 
 
 ;;; `font' tag based output support.
@@ -1520,9 +1509,8 @@ it's called with the same value of KEY.  All other times, the cached
                          (and (htmlize-fstruct-boldp merged)      "</b>")
                          (and (htmlize-fstruct-foreground merged) "</font>"))))))
     (princ (car markup) buffer)
-    (htmlize-lexlet ((markup markup) (buffer buffer))
-      (lambda ()
-        (princ (cdr markup) buffer)))))
+    (lambda ()
+      (princ (cdr markup) buffer))))
 
 
 ;;; Utility functions.
