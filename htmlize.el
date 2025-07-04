@@ -3,7 +3,7 @@
 ;; Copyright (C) 1997-2003,2005,2006,2009,2011,2012,2014,2017,2018,2020 Hrvoje Niksic
 
 ;; Author: Hrvoje Niksic <hniksic@gmail.com>
-;; Homepage: https://github.com/hniksic/emacs-htmlize
+;; Homepage: https://github.com/emacsorphanage/htmlize
 ;; Keywords: hypermedia, extensions
 ;; Version: 1.58
 ;; Package-Requires: ((emacs "26.1"))
@@ -68,9 +68,7 @@
 
 ;; The latest version is available at:
 ;;
-;;        <https://github.com/hniksic/emacs-htmlize>
-;;        <https://code.orgmode.org/mirrors/emacs-htmlize>
-;;
+;;        <https://github.com/emacsorphanage/htmlize>
 
 ;; Thanks go to the many people who have sent reports and contributed
 ;; comments, suggestions, and fixes.  They include Ron Gut, Bob

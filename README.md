@@ -32,5 +32,4 @@ htmlize aims for compatibility with older Emacs versions.  Please
 let me know if it doesn't work on the version of GNU Emacs that you
 are using.
 
-
-[1]: http://htmlpreview.github.io/?https://github.com/hniksic/emacs-htmlize/blob/master/htmlize.el.html
+[1]: http://htmlpreview.github.io/?https://github.com/emacsorphanage/htmlize/blob/master/htmlize.el.html
