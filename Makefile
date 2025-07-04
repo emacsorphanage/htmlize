@@ -4,6 +4,7 @@ PKG = htmlize
 
 ELS   = $(PKG).el
 ELCS  = $(ELS:.el=.elc)
+HTML  = $(ELS:.el=.el.html)
 
 DEPS  =
 
@@ -19,6 +20,7 @@ help:
 	$(info make all          - generate byte-code and autoloads)
 	$(info make lisp         - generate byte-code and autoloads)
 	$(info make redo         - re-generate byte-code and autoloads)
+	$(info make htmlize      - htmlize htmlize.el)
 	$(info make clean        - remove generated files)
 	@printf "\n"
 
@@ -36,6 +38,12 @@ check-declare:
 	@printf " Checking function declarations\n"
 	@$(EMACS) -Q --batch $(EMACS_ARGS) $(LOAD_PATH) \
 	--eval "(check-declare-directory default-directory)"
+
+%.el.html: %.el
+	@$(EMACS) -Q $(EMACS_ARGS) $(LOAD_PATH) \
+	-l htmlize --eval "(progn (htmlize-file \"$<\") (kill-emacs))"
+
+htmlize: $(HTML)
 
 CLEAN  = $(ELCS) $(PKG)-autoloads.el
 
