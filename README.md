@@ -1,5 +1,7 @@
 # Htmlize — Convert buffer text and decorations to HTML
 
+[![NonGNU ELPA](https://elpa.nongnu.org/nongnu/htmlize.svg)](https://elpa.nongnu.org/nongnu/htmlize.html)
+[![MELPA Stable](https://stable.melpa.org/packages/htmlize-badge.svg)](https://stable.melpa.org/#/htmlize)
 [![MELPA](https://melpa.org/packages/htmlize-badge.svg)](https://melpa.org/#/htmlize)
 
 This package converts the buffer text and the associated
