@@ -74,10 +74,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(eval-when-compile
-  (defvar font-lock-auto-fontify)
-  (defvar font-lock-support-mode)
-  (defvar global-font-lock-mode))
 
 (defconst htmlize-version "1.58")
 
@@ -1526,7 +1522,10 @@ it's called with the same value of KEY.  All other times, the cached
       (run-hooks 'htmlize-before-hook))
     ;; Convince font-lock support modes to fontify the entire buffer
     ;; in advance.
-    (htmlize-ensure-fontified)
+    (message "Fontifing %s..." buffer-file-name)
+    (font-lock-ensure)
+    (message "Fontifing %s...done" buffer-file-name)
+    (message "Htmlizing %s..." buffer-file-name)
     (clrhash htmlize-extended-character-cache)
     (clrhash htmlize-memoization-table)
     ;; It's important that the new buffer inherits default-directory
@@ -1641,41 +1640,11 @@ it's called with the same value of KEY.  All other times, the cached
             (setq completed t)
             htmlbuf)
 
-        (when (not completed)
-          (kill-buffer htmlbuf))
+        (if completed
+            (message "Htmlizing %s...done" buffer-file-name)
+          (kill-buffer htmlbuf)
+          (message "Htmlizing %s...failed" buffer-file-name))
         (htmlize-delete-tmp-overlays)))))
-
-(defmacro htmlize-with-fontify-message (&rest body)
-  ;; When forcing fontification of large buffers in
-  ;; htmlize-ensure-fontified, inform the user that he is waiting for
-  ;; font-lock, not for htmlize to finish.
-  `(progn
-     (if (> (buffer-size) 65536)
-         (message "Forcing fontification of %s..."
-                  (buffer-name (current-buffer))))
-     ,@body
-     (if (> (buffer-size) 65536)
-         (message "Forcing fontification of %s...done"
-                  (buffer-name (current-buffer))))))
-
-(defun htmlize-ensure-fontified ()
-  ;; If font-lock is being used, ensure that the "support" modes
-  ;; actually fontify the buffer.  If font-lock is not in use, we
-  ;; don't care because, except in htmlize-file, we don't force
-  ;; font-lock on the user.
-  (when font-lock-mode
-    ;; In part taken from ps-print-ensure-fontified in GNU Emacs 21.
-    (when (and (boundp 'jit-lock-mode)
-               (symbol-value 'jit-lock-mode))
-      (htmlize-with-fontify-message
-       (jit-lock-fontify-now (point-min) (point-max))))
-
-    (if (fboundp 'font-lock-ensure)
-        (font-lock-ensure)
-      ;; Emacs prior to 25.1
-      (with-no-warnings
-        (font-lock-mode 1)
-        (font-lock-fontify-buffer)))))
 
 
 ;;;###autoload
@@ -1776,12 +1745,7 @@ does not name a directory, it will be used as output file name."
                          target
                        (expand-file-name
                         (htmlize-make-file-name (file-name-nondirectory file))
-                        (or target (file-name-directory file)))))
-        ;; Try to prevent `find-file-noselect' from triggering
-        ;; font-lock because we'll fontify explicitly below.
-        (font-lock-mode nil)
-        (font-lock-auto-fontify nil)
-        (global-font-lock-mode nil))
+                        (or target (file-name-directory file))))))
     (with-temp-buffer
       ;; Insert FILE into the temporary buffer.
       (insert-file-contents file)
