@@ -334,6 +334,7 @@ output.")
   '((svg . "svg+xml"))
   "Alist mapping Emacs image types to Mime media types.
 https://www.iana.org/assignments/media-types/media-types.xhtml#image")
+
 
 ;;; Some cross-Emacs compatibility.
 
@@ -812,7 +813,8 @@ This is used to protect mailto links without modifying their meaning."
       (htmlize-make-link-overlay
        (match-beginning 0) (match-end 0) (match-string 3)))))
 
-;; Tests for htmlize-create-auto-links:
+
+;;; Tests for htmlize-create-auto-links:
 
 ;; <mailto:hniksic@xemacs.org>
 ;; <http://fly.srk.fer.hr>
@@ -913,6 +915,7 @@ If no rgb.txt file is found, return nil."
 ;; missing, the value of the variable will be nil, and rgb.txt will
 ;; not be used.
 (defvar htmlize-color-rgb-hash (htmlize-get-color-rgb-hash))
+
 
 ;;; Face handling.
 
@@ -1343,6 +1346,7 @@ it's called with the same value of KEY.  All other times, the cached
          (setq ,value ,generator)
          (setf (gethash ,key htmlize-memoization-table) ,value))
        ,value)))
+
 
 ;;; Default methods.
 
@@ -1442,8 +1446,9 @@ it's called with the same value of KEY.  All other times, the cached
       (dolist (fstruct fstruct-list)
         (ignore fstruct)                ; shut up the byte-compiler
         (princ "</span>" buffer)))))
+
 
-;; `inline-css' output support.
+;;; `inline-css' output support.
 
 (defun htmlize-inline-css-body-tag (face-map)
   (format "<body style=\"%s\">"
@@ -1475,6 +1480,7 @@ it's called with the same value of KEY.  All other times, the cached
       (lambda ()
         (when style
           (princ "</span>" buffer))))))
+
 
 ;;; `font' tag based output support.
 
@@ -1517,7 +1523,10 @@ it's called with the same value of KEY.  All other times, the cached
     (htmlize-lexlet ((markup markup) (buffer buffer))
       (lambda ()
         (princ (cdr markup) buffer)))))
+
 
+;;; Utility functions.
+
 (defun htmlize-buffer-1 ()
   ;; Internal function; don't call it from outside this file.  Htmlize
   ;; current buffer, writing the resulting HTML to a new buffer, and
@@ -1647,8 +1656,6 @@ it's called with the same value of KEY.  All other times, the cached
         (when (not completed)
           (kill-buffer htmlbuf))
         (htmlize-delete-tmp-overlays)))))
-
-;; Utility functions.
 
 (defmacro htmlize-with-fontify-message (&rest body)
   ;; When forcing fontification of large buffers in
