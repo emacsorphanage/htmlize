@@ -26,8 +26,7 @@
 ;;; Commentary:
 
 ;; This package converts the buffer text and the associated
-;; decorations to HTML.  Mail to <hniksic@gmail.com> to discuss
-;; features and additions.  All suggestions are more than welcome.
+;; decorations to HTML.
 
 ;; To use it, just switch to the buffer you want HTML-ized and type
 ;; `M-x htmlize-buffer'.  You will be switched to a new buffer that
