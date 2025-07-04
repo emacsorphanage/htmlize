@@ -1,72 +1,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<!-- Created by htmlize-1.45 in css mode. -->
+<!-- Created by htmlize-1.58 in css mode. -->
 <html>
   <head>
     <title>htmlize.el</title>
     <style type="text/css">
     <!--
       body {
-        color: #839496;
-        background-color: #002b36;
+        color: #000000;
+        background-color: #ffffff;
       }
       .builtin {
         /* font-lock-builtin-face */
-        color: #859900;
+        color: #483d8b;
       }
       .comment {
         /* font-lock-comment-face */
-        color: #586e75;
-        font-style: italic;
+        color: #b22222;
       }
       .comment-delimiter {
         /* font-lock-comment-delimiter-face */
-        color: #586e75;
-        font-style: italic;
+        color: #b22222;
       }
       .constant {
         /* font-lock-constant-face */
-        color: #2aa198;
+        color: #008b8b;
       }
       .doc {
         /* font-lock-doc-face */
-        color: #586e75;
-        font-style: italic;
+        color: #8b2252;
       }
       .function-name {
         /* font-lock-function-name-face */
-        color: #268bd2;
+        color: #0000ff;
       }
       .keyword {
         /* font-lock-keyword-face */
-        color: #859900;
+        color: #a020f0;
       }
       .negation-char {
-        /* font-lock-negation-char-face */
-        color: #dc322f;
       }
       .regexp-grouping-backslash {
         /* font-lock-regexp-grouping-backslash */
-        color: #b58900;
+        font-weight: bold;
       }
       .regexp-grouping-construct {
         /* font-lock-regexp-grouping-construct */
-        color: #cb4b16;
+        font-weight: bold;
       }
       .string {
         /* font-lock-string-face */
-        color: #2aa198;
+        color: #8b2252;
       }
       .type {
         /* font-lock-type-face */
-        color: #b58900;
+        color: #228b22;
       }
       .variable-name {
         /* font-lock-variable-name-face */
-        color: #268bd2;
+        color: #a0522d;
       }
       .warning {
         /* font-lock-warning-face */
-        color: #dc322f;
+        color: #ff0000;
         font-weight: bold;
       }
 
@@ -84,34 +79,35 @@
   </head>
   <body>
     <pre>
-<span class="comment-delimiter">;;; </span><span class="comment">htmlize.el --- Convert buffer text and decorations to HTML.
+<span class="comment-delimiter">;;; </span><span class="comment">htmlize.el --- Convert buffer text and decorations to HTML  -*- lexical-binding: t -*-
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">Copyright (C) 1997-2003,2005,2006,2009,2011,2012 Hrvoje Niksic
+<span class="comment-delimiter">;; </span><span class="comment">Copyright (C) 1997-2003,2005,2006,2009,2011,2012,2014,2017,2018,2020 Hrvoje Niksic
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">Author: Hrvoje Niksic <a href="mailto:hniksic%40xemacs.org">&lt;hniksic@xemacs.org&gt;</a>
+<span class="comment-delimiter">;; </span><span class="comment">Author: Hrvoje Niksic <a href="mailto:hniksic%40gmail.com">&lt;hniksic@gmail.com&gt;</a>
+</span><span class="comment-delimiter">;; </span><span class="comment">Homepage: https://github.com/emacsorphanage/htmlize
 </span><span class="comment-delimiter">;; </span><span class="comment">Keywords: hypermedia, extensions
-</span><span class="comment-delimiter">;; </span><span class="comment">Version: 1.45
+</span><span class="comment-delimiter">;; </span><span class="comment">Version: 1.58
+</span><span class="comment-delimiter">;; </span><span class="comment">Package-Requires: ((emacs "26.1"))
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">This program is free software; you can redistribute it and/or modify
-</span><span class="comment-delimiter">;; </span><span class="comment">it under the terms of the GNU General Public License as published by
-</span><span class="comment-delimiter">;; </span><span class="comment">the Free Software Foundation; either version 2, or (at your option)
-</span><span class="comment-delimiter">;; </span><span class="comment">any later version.
+<span class="comment-delimiter">;; </span><span class="comment">SPDX-License-Identifier: GPL-3.0-or-later
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">This program is distributed in the hope that it will be useful,
+<span class="comment-delimiter">;; </span><span class="comment">This file is free software: you can redistribute it and/or modify
+</span><span class="comment-delimiter">;; </span><span class="comment">it under the terms of the GNU General Public License as published
+</span><span class="comment-delimiter">;; </span><span class="comment">by the Free Software Foundation, either version 3 of the License,
+</span><span class="comment-delimiter">;; </span><span class="comment">or (at your option) any later version.
+</span><span class="comment-delimiter">;;</span><span class="comment">
+</span><span class="comment-delimiter">;; </span><span class="comment">This file is distributed in the hope that it will be useful,
 </span><span class="comment-delimiter">;; </span><span class="comment">but WITHOUT ANY WARRANTY; without even the implied warranty of
 </span><span class="comment-delimiter">;; </span><span class="comment">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 </span><span class="comment-delimiter">;; </span><span class="comment">GNU General Public License for more details.
-</span>
-<span class="comment-delimiter">;; </span><span class="comment">You should have received a copy of the GNU General Public License
-</span><span class="comment-delimiter">;; </span><span class="comment">along with this program; see the file COPYING.  If not, write to the
-</span><span class="comment-delimiter">;; </span><span class="comment">Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-</span><span class="comment-delimiter">;; </span><span class="comment">Boston, MA 02111-1307, USA.
+</span><span class="comment-delimiter">;;</span><span class="comment">
+</span><span class="comment-delimiter">;; </span><span class="comment">You should have received a copy of the GNU General Public License
+</span><span class="comment-delimiter">;; </span><span class="comment">along with this file.  If not, see <a href="https://www.gnu.org/licenses/">&lt;https://www.gnu.org/licenses/&gt;</a>.
 </span>
 <span class="comment-delimiter">;;; </span><span class="comment">Commentary:
 </span>
 <span class="comment-delimiter">;; </span><span class="comment">This package converts the buffer text and the associated
-</span><span class="comment-delimiter">;; </span><span class="comment">decorations to HTML.  Mail to <a href="mailto:hniksic%40xemacs.org">&lt;hniksic@xemacs.org&gt;</a> to discuss
-</span><span class="comment-delimiter">;; </span><span class="comment">features and additions.  All suggestions are more than welcome.
+</span><span class="comment-delimiter">;; </span><span class="comment">decorations to HTML.
 </span>
 <span class="comment-delimiter">;; </span><span class="comment">To use it, just switch to the buffer you want HTML-ized and type
 </span><span class="comment-delimiter">;; </span><span class="comment">`M-x htmlize-buffer'.  You will be switched to a new buffer that
@@ -123,7 +119,7 @@
 </span><span class="comment-delimiter">;; </span><span class="comment">the same manner.  `M-x htmlize-many-files-dired' does the same for
 </span><span class="comment-delimiter">;; </span><span class="comment">files marked in a dired buffer.
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">htmlize supports three types of HTML output, selected by setting
+<span class="comment-delimiter">;; </span><span class="comment">Htmlize supports three types of HTML output, selected by setting
 </span><span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">htmlize-output-type</span></span><span class="comment">': `</span><span class="comment"><span class="constant">css</span></span><span class="comment">', `</span><span class="comment"><span class="constant">inline-css</span></span><span class="comment">', and `</span><span class="comment"><span class="constant">font</span></span><span class="comment">'.  In `</span><span class="comment"><span class="constant">css</span></span><span class="comment">'
 </span><span class="comment-delimiter">;; </span><span class="comment">mode, htmlize uses cascading style sheets to specify colors; it
 </span><span class="comment-delimiter">;; </span><span class="comment">generates classes that correspond to Emacs faces and uses &lt;span
@@ -139,30 +135,13 @@
 <span class="comment-delimiter">;; </span><span class="comment">You can also use htmlize from your Emacs Lisp code.  When called
 </span><span class="comment-delimiter">;; </span><span class="comment">non-interactively, `</span><span class="comment"><span class="constant">htmlize-buffer</span></span><span class="comment">' and `</span><span class="comment"><span class="constant">htmlize-region</span></span><span class="comment">' will
 </span><span class="comment-delimiter">;; </span><span class="comment">return the resulting HTML buffer, but will not change current
-</span><span class="comment-delimiter">;; </span><span class="comment">buffer or move the point.  htmlize will do its best to work on
+</span><span class="comment-delimiter">;; </span><span class="comment">buffer or move the point.  Htmlize will do its best to work on
 </span><span class="comment-delimiter">;; </span><span class="comment">non-windowing Emacs sessions but the result will be limited to
 </span><span class="comment-delimiter">;; </span><span class="comment">colors supported by the terminal.
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">htmlize aims for compatibility with Emacsen version 21 and later.
-</span><span class="comment-delimiter">;; </span><span class="comment">Please let me know if it doesn't work on the version of XEmacs or
-</span><span class="comment-delimiter">;; </span><span class="comment">GNU Emacs that you are using.  The package relies on the presence
-</span><span class="comment-delimiter">;; </span><span class="comment">of CL extensions, especially for cross-emacs compatibility; please
-</span><span class="comment-delimiter">;; </span><span class="comment">don't try to remove that dependency.  I see no practical problems
-</span><span class="comment-delimiter">;; </span><span class="comment">with using the full power of the CL extensions, except that one
-</span><span class="comment-delimiter">;; </span><span class="comment">might learn to like them too much.
-</span>
-<span class="comment-delimiter">;; </span><span class="comment">The latest version is available as a git repository at:
+<span class="comment-delimiter">;; </span><span class="comment">The latest version is available at:
 </span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;;        </span><span class="comment"><a href="http://fly.srk.fer.hr/~hniksic/emacs/htmlize.git">&lt;http://fly.srk.fer.hr/~hniksic/emacs/htmlize.git&gt;</a>
-</span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;; </span><span class="comment">The snapshot of the latest release can be obtained at:
-</span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;;        </span><span class="comment"><a href="http://fly.srk.fer.hr/~hniksic/emacs/htmlize.el.cgi">&lt;http://fly.srk.fer.hr/~hniksic/emacs/htmlize.el.cgi&gt;</a>
-</span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;; </span><span class="comment">You can find a sample of htmlize's output (possibly generated with
-</span><span class="comment-delimiter">;; </span><span class="comment">an older version) at:
-</span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;;        </span><span class="comment"><a href="http://fly.srk.fer.hr/~hniksic/emacs/htmlize.el.html">&lt;http://fly.srk.fer.hr/~hniksic/emacs/htmlize.el.html&gt;</a>
+</span><span class="comment-delimiter">;;        </span><span class="comment"><a href="https://github.com/emacsorphanage/htmlize">&lt;https://github.com/emacsorphanage/htmlize&gt;</a>
 </span>
 <span class="comment-delimiter">;; </span><span class="comment">Thanks go to the many people who have sent reports and contributed
 </span><span class="comment-delimiter">;; </span><span class="comment">comments, suggestions, and fixes.  They include Ron Gut, Bob
@@ -175,17 +154,13 @@
 <hr /></span>
 <span class="comment-delimiter">;;; </span><span class="comment">Code:
 </span>
-(<span class="keyword">require</span> '<span class="constant">cl</span>)
+(<span class="keyword">require</span> '<span class="constant">cl-lib</span>)
 (<span class="keyword">eval-when-compile</span>
-  (<span class="keyword">defvar</span> <span class="variable-name">unresolved</span>)
-  (<span class="keyword">if</span> (string-match <span class="string">"XEmacs"</span> emacs-version)
-      (byte-compiler-options
-        (warnings (- unresolved))))
   (<span class="keyword">defvar</span> <span class="variable-name">font-lock-auto-fontify</span>)
   (<span class="keyword">defvar</span> <span class="variable-name">font-lock-support-mode</span>)
   (<span class="keyword">defvar</span> <span class="variable-name">global-font-lock-mode</span>))
 
-(<span class="keyword">defconst</span> <span class="variable-name">htmlize-version</span> <span class="string">"1.45"</span>)
+(<span class="keyword">defconst</span> <span class="variable-name">htmlize-version</span> <span class="string">"1.58"</span>)
 
 (<span class="keyword">defgroup</span> <span class="type">htmlize</span> nil
   <span class="doc">"Convert buffer text and faces to HTML."</span>
@@ -237,7 +212,9 @@ embedded in the HTML as data URIs."</span>
 Normally when htmlize encounters text covered by the `</span><span class="doc"><span class="constant">display</span></span><span class="doc">' property
 that specifies an image, it generates an `</span><span class="doc"><span class="constant">alt</span></span><span class="doc">' attribute containing the
 original text.  If the text is larger than `</span><span class="doc"><span class="constant">htmlize-max-alt-text</span></span><span class="doc">' characters,
-this will not be done."</span>)
+this will not be done."</span>
+  <span class="builtin">:type</span> 'integer
+  <span class="builtin">:group</span> 'htmlize)
 
 (<span class="keyword">defcustom</span> <span class="variable-name">htmlize-transform-image</span> 'htmlize-default-transform-image
   <span class="doc">"Function called to modify the image descriptor.
@@ -280,7 +257,7 @@ It has no effect on whether htmlize respects the `</span><span class="doc"><span
   <span class="doc">"Non-nil means replace form feeds in source code with HTML separators.
 Form feeds are the ^L characters at line beginnings that are sometimes
 used to separate sections of source code.  If this variable is set to
-`t', form feed characters are replaced with the &lt;hr&gt; separator.  If this
+`</span><span class="doc"><span class="constant">t</span></span><span class="doc">', form feed characters are replaced with the &lt;hr&gt; separator.  If this
 is a string, it specifies the replacement to use.  Note that &lt;pre&gt; is
 temporarily closed before the separator is inserted, so the default
 replacement is effectively \"&lt;/pre&gt;&lt;hr /&gt;&lt;pre&gt;\".  If you specify
@@ -381,12 +358,41 @@ running Emacs on non-X11 systems), this option is ignored."</span>
   <span class="builtin">:type</span> 'boolean
   <span class="builtin">:group</span> 'htmlize)
 
+(<span class="keyword">defvar</span> <span class="variable-name">htmlize-face-overrides</span> nil
+  <span class="doc">"Overrides for face definitions.
+
+Normally face definitions are taken from Emacs settings for fonts
+in the current frame.  For faces present in this plist, the
+definitions will be used instead.  Keys in the plist are symbols
+naming the face and values are the overriding definitions.  For
+example:
+
+  (setq htmlize-face-overrides
+        </span><span class="doc"><span class="builtin">\\=</span></span><span class="doc">'(font-lock-warning-face \"black\"
+          font-lock-function-name-face \"red\"
+          font-lock-comment-face \"blue\"
+          default (:foreground \"dark-green\" :background \"yellow\")))
+
+This variable can be also be `</span><span class="doc"><span class="constant">let</span></span><span class="doc">' bound when running `</span><span class="doc"><span class="constant">htmlize-buffer</span></span><span class="doc">'."</span>)
+
+(<span class="keyword">defcustom</span> <span class="variable-name">htmlize-untabify</span> t
+  <span class="doc">"Non-nil means untabify buffer contents during htmlization."</span>
+  <span class="builtin">:type</span> 'boolean
+  <span class="builtin">:group</span> 'htmlize)
+
 (<span class="keyword">defcustom</span> <span class="variable-name">htmlize-html-major-mode</span> nil
   <span class="doc">"The mode the newly created HTML buffer will be put in.
 Set this to nil if you prefer the default (fundamental) mode."</span>
   <span class="builtin">:type</span> '(radio (const <span class="builtin">:tag</span> <span class="string">"No mode (fundamental)"</span> nil)
-                 (function-item html-mode)
-                 (function <span class="builtin">:tag</span> <span class="string">"User-defined major mode"</span>))
+                (function-item html-mode)
+                (<span class="keyword">function</span> <span class="builtin">:tag</span> <span class="string">"User-defined major mode"</span>))
+  <span class="builtin">:group</span> 'htmlize)
+
+(<span class="keyword">defcustom</span> <span class="variable-name">htmlize-pre-style</span> nil
+  <span class="doc">"When non-nil, `</span><span class="doc"><span class="constant">&lt;pre&gt;</span></span><span class="doc">' tags will be decorated with style
+information in `</span><span class="doc"><span class="constant">font</span></span><span class="doc">' and `</span><span class="doc"><span class="constant">inline-css</span></span><span class="doc">' modes. This allows a
+consistent background for captures of regions."</span>
+  <span class="builtin">:type</span> 'boolean
   <span class="builtin">:group</span> 'htmlize)
 
 (<span class="keyword">defvar</span> <span class="variable-name">htmlize-before-hook</span> nil
@@ -404,78 +410,45 @@ output."</span>)
   <span class="doc">"Hook run by `</span><span class="doc"><span class="constant">htmlize-file</span></span><span class="doc">' after htmlizing a file, but before saving it."</span>)
 
 (<span class="keyword">defvar</span> <span class="variable-name">htmlize-buffer-places</span>)
+
+(<span class="keyword">defconst</span> <span class="variable-name">htmlize-image-mime-type-alist</span>
+  '((svg . <span class="string">"svg+xml"</span>))
+  <span class="doc">"Alist mapping Emacs image types to Mime media types.
+https://www.iana.org/assignments/media-types/media-types.xhtml#image"</span>)
+
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">Some cross-Emacs compatibility.
 </span>
-<span class="comment-delimiter">;; </span><span class="comment">I try to conditionalize on features rather than Emacs version, but
-</span><span class="comment-delimiter">;; </span><span class="comment">in some cases checking against the version *is* necessary.
-</span>(<span class="keyword">defconst</span> <span class="variable-name">htmlize-running-xemacs</span> (string-match <span class="string">"XEmacs"</span> emacs-version))
-
 <span class="comment-delimiter">;; </span><span class="comment">We need a function that efficiently finds the next change of a
 </span><span class="comment-delimiter">;; </span><span class="comment">property regardless of whether the change occurred because of a
 </span><span class="comment-delimiter">;; </span><span class="comment">text property or an extent/overlay.
-</span>(<span class="keyword">cond</span>
- (htmlize-running-xemacs
-  (<span class="keyword">defun</span> <span class="function-name">htmlize-next-change</span> (pos prop <span class="type">&amp;optional</span> limit)
-    (<span class="keyword">if</span> prop
-        (next-single-char-property-change pos prop nil (or limit (point-max)))
-      (next-property-change pos nil (or limit (point-max)))))
-  (<span class="keyword">defun</span> <span class="function-name">htmlize-next-face-change</span> (pos <span class="type">&amp;optional</span> limit)
-    (htmlize-next-change pos 'face limit)))
- ((fboundp 'next-single-char-property-change)
-  <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs 21+
-</span>  (<span class="keyword">defun</span> <span class="function-name">htmlize-next-change</span> (pos prop <span class="type">&amp;optional</span> limit)
-    (<span class="keyword">if</span> prop
-        (next-single-char-property-change pos prop nil limit)
-      (next-char-property-change pos limit)))
-  (<span class="keyword">defun</span> <span class="function-name">htmlize-overlay-faces-at</span> (pos)
-    (delq nil (mapcar (<span class="keyword">lambda</span> (o) (overlay-get o 'face)) (overlays-at pos))))
-  (<span class="keyword">defun</span> <span class="function-name">htmlize-next-face-change</span> (pos <span class="type">&amp;optional</span> limit)
-    <span class="comment-delimiter">;; </span><span class="comment">(htmlize-next-change pos 'face limit) would skip over entire
-</span>    <span class="comment-delimiter">;; </span><span class="comment">overlays that specify the `</span><span class="comment"><span class="constant">face</span></span><span class="comment">' property, even when they
-</span>    <span class="comment-delimiter">;; </span><span class="comment">contain smaller text properties that also specify `</span><span class="comment"><span class="constant">face</span></span><span class="comment">'.
-</span>    <span class="comment-delimiter">;; </span><span class="comment">Emacs display engine merges those faces, and so must we.
-</span>    (or limit
-        (setq limit (point-max)))
-    (<span class="keyword">let</span> ((next-prop (next-single-property-change pos 'face nil limit))
-          (overlay-faces (htmlize-overlay-faces-at pos)))
-      (<span class="keyword">while</span> (<span class="keyword">progn</span>
-               (setq pos (next-overlay-change pos))
-               (and (&lt; pos next-prop)
-                    (equal overlay-faces (htmlize-overlay-faces-at pos)))))
-      (setq pos (min pos next-prop))
-      <span class="comment-delimiter">;; </span><span class="comment">Additionally, we include the entire region that specifies the
-</span>      <span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">display</span></span><span class="comment">' property.
-</span>      (<span class="keyword">when</span> (get-char-property pos 'display)
-        (setq pos (next-single-char-property-change pos 'display nil limit)))
-      pos)))
- (t
-  (<span class="warning">error</span> <span class="string">"htmlize requires next-single-property-change or \
-next-single-char-property-change"</span>)))
+</span>(<span class="keyword">defun</span> <span class="function-name">htmlize-next-change</span> (pos prop <span class="type">&amp;optional</span> limit)
+  (<span class="keyword">if</span> prop
+      (next-single-char-property-change pos prop nil limit)
+    (next-char-property-change pos limit)))
 
-(<span class="keyword">defmacro</span> <span class="function-name">htmlize-lexlet</span> (<span class="type">&amp;rest</span> letforms)
-  (<span class="keyword">declare</span> (indent 1) (debug let))
-  (<span class="keyword">if</span> (and (boundp 'lexical-binding)
-           lexical-binding)
-      `(<span class="keyword">let</span> ,@letforms)
-    <span class="comment-delimiter">;; </span><span class="comment">cl extensions have a macro implementing lexical let
-</span>    `(<span class="keyword">lexical-let</span> ,@letforms)))
+(<span class="keyword">defun</span> <span class="function-name">htmlize-overlay-faces-at</span> (pos)
+  (delq nil (mapcar (<span class="keyword">lambda</span> (o) (overlay-get o 'face)) (overlays-at pos))))
 
-<span class="comment-delimiter">;; </span><span class="comment">Simple overlay emulation for XEmacs
-</span>
-(<span class="keyword">cond</span>
- (htmlize-running-xemacs
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-make-overlay</span> 'make-extent)
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-overlay-put</span> 'set-extent-property)
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-overlay-get</span> 'extent-property)
-  (<span class="keyword">defun</span> <span class="function-name">htmlize-overlays-in</span> (beg end) (extent-list nil beg end))
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-delete-overlay</span> 'detach-extent))
- (t
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-make-overlay</span> 'make-overlay)
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-overlay-put</span> 'overlay-put)
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-overlay-get</span> 'overlay-get)
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-overlays-in</span> 'overlays-in)
-  (<span class="keyword">defalias</span> '<span class="function-name">htmlize-delete-overlay</span> 'delete-overlay)))
+(<span class="keyword">defun</span> <span class="function-name">htmlize-next-face-change</span> (pos <span class="type">&amp;optional</span> limit)
+  <span class="comment-delimiter">;; </span><span class="comment">(htmlize-next-change pos 'face limit) would skip over entire
+</span>  <span class="comment-delimiter">;; </span><span class="comment">overlays that specify the `</span><span class="comment"><span class="constant">face</span></span><span class="comment">' property, even when they
+</span>  <span class="comment-delimiter">;; </span><span class="comment">contain smaller text properties that also specify `</span><span class="comment"><span class="constant">face</span></span><span class="comment">'.
+</span>  <span class="comment-delimiter">;; </span><span class="comment">Emacs display engine merges those faces, and so must we.
+</span>  (<span class="keyword">or</span> limit
+      (<span class="keyword">setq</span> limit (point-max)))
+  (<span class="keyword">let</span> ((next-prop (next-single-property-change pos 'face nil limit))
+        (overlay-faces (htmlize-overlay-faces-at pos)))
+    (<span class="keyword">while</span> (<span class="keyword">progn</span>
+             (<span class="keyword">setq</span> pos (next-overlay-change pos))
+             (<span class="keyword">and</span> (&lt; pos next-prop)
+                  (equal overlay-faces (htmlize-overlay-faces-at pos)))))
+    (<span class="keyword">setq</span> pos (min pos next-prop))
+    <span class="comment-delimiter">;; </span><span class="comment">Additionally, we include the entire region that specifies the
+</span>    <span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">display</span></span><span class="comment">' property.
+</span>    (<span class="keyword">when</span> (get-char-property pos 'display)
+      (<span class="keyword">setq</span> pos (next-single-char-property-change pos 'display nil limit)))
+    pos))
 
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">Transformation of buffer text: HTML escapes, untabification, etc.
@@ -487,11 +460,11 @@ next-single-char-property-change"</span>)))
     <span class="comment-delimiter">;; </span><span class="comment">Map characters in the 32-126 range to themselves, others to
 </span>    <span class="comment-delimiter">;; </span><span class="comment">&amp;#CODE entities;
 </span>    (<span class="keyword">dotimes</span> (i 128)
-      (setf (aref table i) (<span class="keyword">if</span> (and (&gt;= i 32) (&lt;= i 126))
+      (<span class="keyword">setf</span> (aref table i) (<span class="keyword">if</span> (<span class="keyword">and</span> (&gt;= i 32) (&lt;= i 126))
                                (char-to-string i)
                              (format <span class="string">"&amp;#%d;"</span> i))))
     <span class="comment-delimiter">;; </span><span class="comment">Set exceptions manually.
-</span>    (setf
+</span>    (<span class="keyword">setf</span>
      <span class="comment-delimiter">;; </span><span class="comment">Don't escape newline, carriage return, and TAB.
 </span>     (aref table ?\n) <span class="string">"\n"</span>
      (aref table ?\r) <span class="string">"\r"</span>
@@ -503,7 +476,7 @@ next-single-char-property-change"</span>)))
      <span class="comment-delimiter">;; </span><span class="comment">Not escaping '"' buys us a measurable speedup.  It's only
 </span>     <span class="comment-delimiter">;; </span><span class="comment">necessary to quote it for strings used in attribute values,
 </span>     <span class="comment-delimiter">;; </span><span class="comment">which htmlize doesn't typically do.
-</span>     <span class="comment-delimiter">;</span><span class="comment">(aref table ?\") "&amp;quot;"
+</span>     <span class="comment-delimiter">;; </span><span class="comment">(aref table ?\") "&amp;quot;"
 </span>     )
     table))
 
@@ -535,28 +508,28 @@ next-single-char-property-change"</span>)))
                   ((not htmlize-convert-nonascii-to-entities)
                    <span class="comment-delimiter">;; </span><span class="comment">If conversion to entities is not desired, always
 </span>                   <span class="comment-delimiter">;; </span><span class="comment">copy the char literally.
-</span>                   (setf (gethash char htmlize-extended-character-cache)
+</span>                   (<span class="keyword">setf</span> (gethash char htmlize-extended-character-cache)
                          (char-to-string char)))
                   ((&lt; char 256)
                    <span class="comment-delimiter">;; </span><span class="comment">Latin 1: no need to call encode-char.
-</span>                   (setf (gethash char htmlize-extended-character-cache)
+</span>                   (<span class="keyword">setf</span> (gethash char htmlize-extended-character-cache)
                          (format <span class="string">"&amp;#%d;"</span> char)))
                   ((encode-char char 'ucs)
                    <span class="comment-delimiter">;; </span><span class="comment">Must check if encode-char works for CHAR;
 </span>                   <span class="comment-delimiter">;; </span><span class="comment">it fails for Arabic and possibly elsewhere.
-</span>                   (setf (gethash char htmlize-extended-character-cache)
+</span>                   (<span class="keyword">setf</span> (gethash char htmlize-extended-character-cache)
                          (format <span class="string">"&amp;#%d;"</span> (encode-char char 'ucs))))
                   (t
                    <span class="comment-delimiter">;; </span><span class="comment">encode-char doesn't work for this char.  Copy it
 </span>                   <span class="comment-delimiter">;; </span><span class="comment">unchanged and hope for the best.
-</span>                   (setf (gethash char htmlize-extended-character-cache)
+</span>                   (<span class="keyword">setf</span> (gethash char htmlize-extended-character-cache)
                          (char-to-string char)))))
                string <span class="string">""</span>)))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-attr-escape</span> (string)
   <span class="comment-delimiter">;; </span><span class="comment">Like htmlize-protect-string, but also escapes double-quoted
 </span>  <span class="comment-delimiter">;; </span><span class="comment">strings to make it usable in attribute values.
-</span>  (setq string (htmlize-protect-string string))
+</span>  (<span class="keyword">setq</span> string (htmlize-protect-string string))
   (<span class="keyword">if</span> (not (string-match <span class="string">"\""</span> string))
       string
     (mapconcat (<span class="keyword">lambda</span> (char)
@@ -566,7 +539,7 @@ next-single-char-property-change"</span>)))
                string <span class="string">""</span>)))
 
 (<span class="keyword">defsubst</span> <span class="function-name">htmlize-concat</span> (list)
-  (<span class="keyword">if</span> (and (consp list) (null (cdr list)))
+  (<span class="keyword">if</span> (<span class="keyword">and</span> (consp list) (null (cdr list)))
       <span class="comment-delimiter">;; </span><span class="comment">Don't create a new string in the common case where the list only
 </span>      <span class="comment-delimiter">;; </span><span class="comment">consists of one element.
 </span>      (car list)
@@ -590,7 +563,7 @@ next-single-char-property-change"</span>)))
              (next-link-change (next-single-property-change
                                 pos 'htmlize-link string end))
              (chunk (substring string pos next-link-change)))
-        (push
+        (<span class="keyword">push</span>
          (<span class="keyword">cond</span> (link
                 (htmlize-format-link link chunk))
                ((get-char-property 0 'htmlize-literal chunk)
@@ -598,7 +571,7 @@ next-single-char-property-change"</span>)))
                (t
                 (htmlize-protect-string chunk)))
          outlist)
-        (setq pos next-link-change)))
+        (<span class="keyword">setq</span> pos next-link-change)))
     (htmlize-concat (nreverse outlist))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-display-prop-to-html</span> (display text)
@@ -608,7 +581,7 @@ next-single-char-property-change"</span>)))
 </span>           (htmlize-escape-or-link display))
           ((not (eq (car-safe display) 'image))
            (htmlize-protect-string text))
-          ((null (setq desc (funcall htmlize-transform-image
+          ((null (<span class="keyword">setq</span> desc (funcall htmlize-transform-image
                                      (cdr display) text)))
            (htmlize-escape-or-link text))
           ((stringp desc)
@@ -627,12 +600,12 @@ next-single-char-property-change"</span>)))
              (next-display-change (next-single-property-change
                                    pos 'display string end))
              (chunk (substring string pos next-display-change)))
-        (push
+        (<span class="keyword">push</span>
          (<span class="keyword">if</span> display
              (htmlize-display-prop-to-html display chunk)
            (htmlize-escape-or-link chunk))
          outlist)
-        (setq pos next-display-change)))
+        (<span class="keyword">setq</span> pos next-display-change)))
     (htmlize-concat (nreverse outlist))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-default-transform-image</span> (imgprops _text)
@@ -647,7 +620,7 @@ list."</span>
     (<span class="keyword">when</span> (plist-get imgprops <span class="builtin">:file</span>)
       (<span class="keyword">let</span> ((location (plist-get (cdr (find-image (list imgprops))) <span class="builtin">:file</span>)))
         (<span class="keyword">when</span> location
-          (setq imgprops (plist-put (copy-list imgprops) <span class="builtin">:file</span> location)))))
+          (<span class="keyword">setq</span> imgprops (plist-put (cl-copy-list imgprops) <span class="builtin">:file</span> location)))))
     (<span class="keyword">if</span> htmlize-force-inline-images
         (<span class="keyword">let</span> ((location (plist-get imgprops <span class="builtin">:file</span>))
               data)
@@ -656,17 +629,17 @@ list."</span>
               (<span class="keyword">condition-case</span> nil
                   (<span class="keyword">progn</span>
                     (insert-file-contents-literally location)
-                    (setq data (buffer-string)))
+                    (<span class="keyword">setq</span> data (buffer-string)))
                 (<span class="warning">error</span> nil))))
           <span class="comment-delimiter">;; </span><span class="comment">if successful, return the new plist, otherwise return
 </span>          <span class="comment-delimiter">;; </span><span class="comment">nil, which will use the original text
-</span>          (and data
+</span>          (<span class="keyword">and</span> data
                (plist-put (plist-put imgprops <span class="builtin">:file</span> nil)
                           <span class="builtin">:data</span> data)))
       imgprops)))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-alt-text</span> (_imgprops origtext)
-  (and (/= (length origtext) 0)
+  (<span class="keyword">and</span> (/= (length origtext) 0)
        (&lt;= (length origtext) htmlize-max-alt-text)
        (not (string-match <span class="string">"[\0-\x1f]"</span> origtext))
        origtext))
@@ -679,27 +652,29 @@ list."</span>
     (<span class="keyword">cond</span> ((plist-get imgprops <span class="builtin">:file</span>)
            <span class="comment-delimiter">;; </span><span class="comment">Try to find the image in image-load-path
 </span>           (<span class="keyword">let*</span> ((found-props (cdr (find-image (list imgprops))))
-                  (file (or (plist-get found-props <span class="builtin">:file</span>)
+                  (file (<span class="keyword">or</span> (plist-get found-props <span class="builtin">:file</span>)
                             (plist-get imgprops <span class="builtin">:file</span>))))
              (format <span class="string">"&lt;img src=\"%s\"%s /&gt;"</span>
                      (htmlize-attr-escape (file-relative-name file))
                      alt-attr)))
           ((plist-get imgprops <span class="builtin">:data</span>)
-           (format <span class="string">"&lt;img src=\"data:image/%s;base64,%s\"%s /&gt;"</span>
-                   (or (plist-get imgprops <span class="builtin">:type</span>) <span class="string">""</span>)
-                   (base64-encode-string (plist-get imgprops <span class="builtin">:data</span>))
-                   alt-attr)))))
+           (<span class="keyword">let</span> ((image-type (plist-get imgprops <span class="builtin">:type</span>)))
+             (format <span class="string">"&lt;img src=\"data:image/%s;base64,%s\"%s /&gt;"</span>
+                     (<span class="keyword">or</span> (alist-get image-type htmlize-image-mime-type-alist)
+                         image-type <span class="string">""</span>)
+                     (base64-encode-string (plist-get imgprops <span class="builtin">:data</span>))
+                     alt-attr))))))
 
-(<span class="keyword">defconst</span> <span class="variable-name">htmlize-ellipsis</span> <span class="string">"..."</span>)
-(put-text-property 0 (length htmlize-ellipsis) 'htmlize-ellipsis t htmlize-ellipsis)
+(<span class="keyword">defconst</span> <span class="variable-name">htmlize-ellipsis</span> (propertize <span class="string">"..."</span> 'htmlize-ellipsis t))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-match-inv-spec</span> (inv)
-  (member* inv buffer-invisibility-spec
-           <span class="builtin">:key</span> (<span class="keyword">lambda</span> (i)
-                  (<span class="keyword">if</span> (symbolp i) i (car i)))))
+  (cl-member inv buffer-invisibility-spec
+             <span class="builtin">:key</span> (<span class="keyword">lambda</span> (i)
+                    (<span class="keyword">if</span> (symbolp i) i (car i)))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-decode-invisibility-spec</span> (invisible)
-  <span class="comment-delimiter">;; </span><span class="comment">Return t, nil, or `</span><span class="comment"><span class="constant">ellipsis</span></span><span class="comment">', depending on how invisible text should be inserted.
+  <span class="comment-delimiter">;; </span><span class="comment">Return t, nil, or `</span><span class="comment"><span class="constant">ellipsis</span></span><span class="comment">', depending on how invisible text should
+</span>  <span class="comment-delimiter">;; </span><span class="comment">be inserted.
 </span>
   (<span class="keyword">if</span> (not (listp buffer-invisibility-spec))
       <span class="comment-delimiter">;; </span><span class="comment">If buffer-invisibility-spec is not a list, then all
@@ -716,7 +691,7 @@ list."</span>
 </span>    <span class="comment-delimiter">;; </span><span class="comment">CDR, replace the invisible text with an ellipsis.
 </span>    (<span class="keyword">let</span> ((match (<span class="keyword">if</span> (symbolp invisible)
                      (htmlize-match-inv-spec invisible)
-                   (some #'htmlize-match-inv-spec invisible))))
+                   (cl-some #'htmlize-match-inv-spec invisible))))
       (<span class="keyword">cond</span> ((null match) t)
             ((cdr-safe (car match)) 'ellipsis)
             (t nil)))))
@@ -730,23 +705,23 @@ list."</span>
       (<span class="keyword">let</span> ((before (overlay-get overlay 'before-string))
             (after (overlay-get overlay 'after-string)))
         (<span class="keyword">when</span> after
-          (push (cons (- (overlay-end overlay) beg)
+          (<span class="keyword">push</span> (cons (- (overlay-end overlay) beg)
                       after)
                 additions))
         (<span class="keyword">when</span> before
-          (push (cons (- (overlay-start overlay) beg)
+          (<span class="keyword">push</span> (cons (- (overlay-start overlay) beg)
                       before)
                 additions))))
     (<span class="keyword">if</span> additions
         (<span class="keyword">let</span> ((textlist nil)
               (strpos 0))
-          (<span class="keyword">dolist</span> (add (stable-sort additions #'&lt; <span class="builtin">:key</span> #'car))
+          (<span class="keyword">dolist</span> (add (cl-stable-sort additions #'&lt; <span class="builtin">:key</span> #'car))
             (<span class="keyword">let</span> ((addpos (car add))
                   (addtext (cdr add)))
-              (push (substring text strpos addpos) textlist)
-              (push addtext textlist)
-              (setq strpos addpos)))
-          (push (substring text strpos) textlist)
+              (<span class="keyword">push</span> (substring text strpos addpos) textlist)
+              (<span class="keyword">push</span> addtext textlist)
+              (<span class="keyword">setq</span> strpos addpos)))
+          (<span class="keyword">push</span> (substring text strpos) textlist)
           (apply #'concat (nreverse textlist)))
       text)))
 
@@ -762,7 +737,7 @@ list."</span>
         (<span class="keyword">when</span> value
           (put-text-property (- pos beg) (- next-change beg)
                              prop value string))
-        (setq pos next-change)))))
+        (<span class="keyword">setq</span> pos next-change)))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-get-text-with-display</span> (beg end)
   <span class="comment-delimiter">;; </span><span class="comment">Like buffer-substring-no-properties, except it copies the
@@ -770,8 +745,7 @@ list."</span>
 </span>  (<span class="keyword">let</span> ((text (buffer-substring-no-properties beg end)))
     (htmlize-copy-prop 'display beg end text)
     (htmlize-copy-prop 'htmlize-link beg end text)
-    (<span class="keyword">unless</span> htmlize-running-xemacs
-      (setq text (htmlize-add-before-after-strings beg end text)))
+    (<span class="keyword">setq</span> text (htmlize-add-before-after-strings beg end text))
     text))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-buffer-substring-no-invisible</span> (beg end)
@@ -784,17 +758,17 @@ list."</span>
 </span>    <span class="comment-delimiter">;; </span><span class="comment">out the portions where it's non-nil, i.e. where the text is
 </span>    <span class="comment-delimiter">;; </span><span class="comment">invisible.
 </span>    (<span class="keyword">while</span> (&lt; pos end)
-      (setq invisible (get-char-property pos 'invisible)
+      (<span class="keyword">setq</span> invisible (get-char-property pos 'invisible)
             next-change (htmlize-next-change pos 'invisible end)
             show (htmlize-decode-invisibility-spec invisible))
       (<span class="keyword">cond</span> ((eq show t)
-             (push (htmlize-get-text-with-display pos next-change)
+             (<span class="keyword">push</span> (htmlize-get-text-with-display pos next-change)
                    visible-list))
-            ((and (eq show 'ellipsis)
+            ((<span class="keyword">and</span> (eq show 'ellipsis)
                   (not (eq last-show 'ellipsis))
                   <span class="comment-delimiter">;; </span><span class="comment">Conflate successive ellipses.
-</span>                  (push htmlize-ellipsis visible-list))))
-      (setq pos next-change last-show show))
+</span>                  (<span class="keyword">push</span> htmlize-ellipsis visible-list))))
+      (<span class="keyword">setq</span> pos next-change last-show show))
     (htmlize-concat (nreverse visible-list))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-trim-ellipsis</span> (text)
@@ -808,50 +782,51 @@ list."</span>
 
 (<span class="keyword">defconst</span> <span class="variable-name">htmlize-tab-spaces</span>
   <span class="comment-delimiter">;; </span><span class="comment">A table of strings with spaces.  (aref htmlize-tab-spaces 5) is
-</span>  <span class="comment-delimiter">;; </span><span class="comment">like (make-string 5 ?\ ), except it doesn't cons.
+</span>  <span class="comment-delimiter">;; </span><span class="comment">like (make-string 5 ?\s), except it doesn't cons.
 </span>  (<span class="keyword">let</span> ((v (make-vector 32 nil)))
     (<span class="keyword">dotimes</span> (i (length v))
-      (setf (aref v i) (make-string i ?\ )))
+      (<span class="keyword">setf</span> (aref v i) (make-string i ?\s)))
     v))
 
-(<span class="keyword">defun</span> <span class="function-name">htmlize-untabify</span> (text start-column)
+(<span class="keyword">defun</span> <span class="function-name">htmlize-untabify-string</span> (text start-column)
   <span class="doc">"Untabify TEXT, assuming it starts at START-COLUMN."</span>
   (<span class="keyword">let</span> ((column start-column)
         (last-match 0)
         (chunk-start 0)
         chunks match-pos tab-size)
     (<span class="keyword">while</span> (string-match <span class="string">"[\t\n]"</span> text last-match)
-      (setq match-pos (match-beginning 0))
+      (<span class="keyword">setq</span> match-pos (match-beginning 0))
       (<span class="keyword">cond</span> ((eq (aref text match-pos) ?\t)
              <span class="comment-delimiter">;; </span><span class="comment">Encountered a tab: create a chunk of text followed by
 </span>             <span class="comment-delimiter">;; </span><span class="comment">the expanded tab.
-</span>             (push (substring text chunk-start match-pos) chunks)
+</span>             (<span class="keyword">push</span> (substring text chunk-start match-pos) chunks)
              <span class="comment-delimiter">;; </span><span class="comment">Increase COLUMN by the length of the text we've
 </span>             <span class="comment-delimiter">;; </span><span class="comment">skipped since last tab or newline.  (Encountering
 </span>             <span class="comment-delimiter">;; </span><span class="comment">newline resets it.)
-</span>             (incf column (- match-pos last-match))
+</span>             (<span class="keyword">cl-incf</span> column (- match-pos last-match))
              <span class="comment-delimiter">;; </span><span class="comment">Calculate tab size based on tab-width and COLUMN.
-</span>             (setq tab-size (- tab-width (% column tab-width)))
+</span>             (<span class="keyword">setq</span> tab-size (- tab-width (% column tab-width)))
              <span class="comment-delimiter">;; </span><span class="comment">Expand the tab, carefully recreating the `</span><span class="comment"><span class="constant">display</span></span><span class="comment">'
 </span>             <span class="comment-delimiter">;; </span><span class="comment">property if one was on the TAB.
 </span>             (<span class="keyword">let</span> ((display (get-text-property match-pos 'display text))
                    (expanded-tab (aref htmlize-tab-spaces tab-size)))
                (<span class="keyword">when</span> display
+                 (<span class="keyword">setq</span> expanded-tab (copy-sequence expanded-tab))
                  (put-text-property 0 tab-size 'display display expanded-tab))
-               (push expanded-tab chunks))
-             (incf column tab-size)
-             (setq chunk-start (1+ match-pos)))
+               (<span class="keyword">push</span> expanded-tab chunks))
+             (<span class="keyword">cl-incf</span> column tab-size)
+             (<span class="keyword">setq</span> chunk-start (1+ match-pos)))
             (t
              <span class="comment-delimiter">;; </span><span class="comment">Reset COLUMN at beginning of line.
-</span>             (setq column 0)))
-      (setq last-match (1+ match-pos)))
+</span>             (<span class="keyword">setq</span> column 0)))
+      (<span class="keyword">setq</span> last-match (1+ match-pos)))
     <span class="comment-delimiter">;; </span><span class="comment">If no chunks have been allocated, it means there have been no
 </span>    <span class="comment-delimiter">;; </span><span class="comment">tabs to expand.  Return TEXT unmodified.
 </span>    (<span class="keyword">if</span> (null chunks)
         text
       (<span class="keyword">when</span> (&lt; chunk-start (length text))
         <span class="comment-delimiter">;; </span><span class="comment">Push the remaining chunk.
-</span>        (push (substring text chunk-start) chunks))
+</span>        (<span class="keyword">push</span> (substring text chunk-start) chunks))
       <span class="comment-delimiter">;; </span><span class="comment">Generate the output from the available chunks.
 </span>      (htmlize-concat (nreverse chunks)))))
 
@@ -860,35 +835,36 @@ list."</span>
 </span>  <span class="comment-delimiter">;; </span><span class="comment">untabify it and escape the HTML metacharacters.
 </span>  (<span class="keyword">let</span> ((text (htmlize-buffer-substring-no-invisible beg end)))
     (<span class="keyword">when</span> trailing-ellipsis
-      (setq text (htmlize-trim-ellipsis text)))
+      (<span class="keyword">setq</span> text (htmlize-trim-ellipsis text)))
     <span class="comment-delimiter">;; </span><span class="comment">If TEXT ends up empty, don't change trailing-ellipsis.
 </span>    (<span class="keyword">when</span> (&gt; (length text) 0)
-      (setq trailing-ellipsis
+      (<span class="keyword">setq</span> trailing-ellipsis
             (get-text-property (1- (length text))
                                'htmlize-ellipsis text)))
-    (setq text (htmlize-untabify text (current-column)))
-    (setq text (htmlize-string-to-html text))
-    (values text trailing-ellipsis)))
+    (<span class="keyword">when</span> htmlize-untabify
+      (<span class="keyword">setq</span> text (htmlize-untabify-string text (current-column))))
+    (<span class="keyword">setq</span> text (htmlize-string-to-html text))
+    (cl-values text trailing-ellipsis)))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-despam-address</span> (string)
-  <span class="doc">"Replace every occurrence of '@' in STRING with %40.
+  <span class="doc">"Replace every occurrence of '</span><span class="doc"><span class="constant">@</span></span><span class="doc">' in STRING with %40.
 This is used to protect mailto links without modifying their meaning."</span>
   <span class="comment-delimiter">;; </span><span class="comment">Suggested by Ville Skytta.
 </span>  (<span class="keyword">while</span> (string-match <span class="string">"@"</span> string)
-    (setq string (replace-match <span class="string">"%40"</span> nil t string)))
+    (<span class="keyword">setq</span> string (replace-match <span class="string">"%40"</span> nil t string)))
   string)
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-make-tmp-overlay</span> (beg end props)
-  (<span class="keyword">let</span> ((overlay (htmlize-make-overlay beg end)))
-    (htmlize-overlay-put overlay 'htmlize-tmp-overlay t)
+  (<span class="keyword">let</span> ((overlay (make-overlay beg end)))
+    (overlay-put overlay 'htmlize-tmp-overlay t)
     (<span class="keyword">while</span> props
-      (htmlize-overlay-put overlay (pop props) (pop props)))
+      (overlay-put overlay (<span class="keyword">pop</span> props) (<span class="keyword">pop</span> props)))
     overlay))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-delete-tmp-overlays</span> ()
-  (<span class="keyword">dolist</span> (overlay (htmlize-overlays-in (point-min) (point-max)))
-    (<span class="keyword">when</span> (htmlize-overlay-get overlay 'htmlize-tmp-overlay)
-      (htmlize-delete-overlay overlay))))
+  (<span class="keyword">dolist</span> (overlay (overlays-in (point-min) (point-max)))
+    (<span class="keyword">when</span> (overlay-get overlay 'htmlize-tmp-overlay)
+      (delete-overlay overlay))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-make-link-overlay</span> (beg end uri)
   (htmlize-make-tmp-overlay beg end `(htmlize-link (<span class="builtin">:uri</span> ,uri))))
@@ -910,7 +886,8 @@ This is used to protect mailto links without modifying their meaning."</span>
       (htmlize-make-link-overlay
        (match-beginning 0) (match-end 0) (match-string 3)))))
 
-<span class="comment-delimiter">;; </span><span class="comment">Tests for htmlize-create-auto-links:
+<hr />
+<span class="comment-delimiter">;;; </span><span class="comment">Tests for htmlize-create-auto-links:
 </span>
 <span class="comment-delimiter">;; </span><span class="comment"><a href="mailto:hniksic%40xemacs.org">&lt;mailto:hniksic@xemacs.org&gt;</a>
 </span><span class="comment-delimiter">;; </span><span class="comment"><a href="http://fly.srk.fer.hr">&lt;http://fly.srk.fer.hr&gt;</a>
@@ -920,11 +897,18 @@ This is used to protect mailto links without modifying their meaning."</span>
 </span><span class="comment-delimiter">;; </span><span class="comment"><a href="mailto:xalan-dev-sc.10148567319.hacuhiucknfgmpfnjcpg-john=doe.com%40xml.apache.org">&lt;xalan-dev-sc.10148567319.hacuhiucknfgmpfnjcpg-john=doe.com@xml.apache.org&gt;</a>
 </span>
 (<span class="keyword">defun</span> <span class="function-name">htmlize-shadow-form-feeds</span> ()
-  (<span class="keyword">let</span> ((s <span class="string">"\n&lt;hr /&gt;"</span>))
-    (put-text-property 0 (length s) 'htmlize-literal t s)
+  (<span class="keyword">let</span> ((s (propertize <span class="string">"\n&lt;hr /&gt;"</span> 'htmlize-literal t)))
     (<span class="keyword">let</span> ((disp `(display ,s)))
       (<span class="keyword">while</span> (re-search-forward <span class="string">"\n\^L"</span> nil t)
-        (htmlize-make-tmp-overlay (match-beginning 0) (match-end 0) disp)))))
+        (<span class="keyword">let*</span> ((beg (match-beginning 0))
+               (end (match-end 0))
+               (form-feed-pos (1+ beg))
+               <span class="comment-delimiter">;; </span><span class="comment">don't process ^L if invisible or covered by `</span><span class="comment"><span class="constant">display</span></span><span class="comment">'
+</span>               (show (<span class="keyword">and</span> (htmlize-decode-invisibility-spec
+                           (get-char-property form-feed-pos 'invisible))
+                          (not (get-char-property form-feed-pos 'display)))))
+          (<span class="keyword">when</span> show
+            (htmlize-make-tmp-overlay beg end disp)))))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-defang-local-variables</span> ()
   <span class="comment-delimiter">;; </span><span class="comment">Juri Linkov reports that an HTML-ized "Local variables" can lead
@@ -934,7 +918,7 @@ This is used to protect mailto links without modifying their meaning."</span>
 </span>  (goto-char (point-min))
   (<span class="keyword">while</span> (search-forward <span class="string">"Local Variables&#58;"</span> nil t)
     (replace-match <span class="string">"Local Variables&amp;#58;"</span> nil t)))
-  
+
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">Color handling.
 </span>
@@ -973,21 +957,21 @@ If RGB-FILE is nil, the function will try hard to find a suitable file
 in the system directories.
 
 If no rgb.txt file is found, return nil."</span>
-  (<span class="keyword">let</span> ((rgb-file (or rgb-file (locate-file
+  (<span class="keyword">let</span> ((rgb-file (<span class="keyword">or</span> rgb-file (locate-file
                                 <span class="string">"rgb.txt"</span>
                                 htmlize-x-library-search-path)))
         (hash nil))
     (<span class="keyword">when</span> rgb-file
       (<span class="keyword">with-temp-buffer</span>
         (insert-file-contents rgb-file)
-        (setq hash (make-hash-table <span class="builtin">:test</span> 'equal))
+        (<span class="keyword">setq</span> hash (make-hash-table <span class="builtin">:test</span> 'equal))
         (<span class="keyword">while</span> (not (eobp))
           (<span class="keyword">cond</span> ((looking-at <span class="string">"^\\s-*</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">[!#]</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">|</span></span><span class="string">$</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">"</span>)
                  <span class="comment-delimiter">;; </span><span class="comment">Skip comments and empty lines.
 </span>                 )
                 ((looking-at
                   <span class="string">"[ \t]*</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">[0-9]+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">[ \t]+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">[0-9]+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">[ \t]+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">[0-9]+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">[ \t]+</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">(</span></span><span class="string">.*</span><span class="string"><span class="regexp-grouping-backslash">\\</span></span><span class="string"><span class="regexp-grouping-construct">)</span></span><span class="string">"</span>)
-                 (setf (gethash (downcase (match-string 4)) hash)
+                 (<span class="keyword">setf</span> (gethash (downcase (match-string 4)) hash)
                        (format <span class="string">"#%02x%02x%02x"</span>
                                (string-to-number (match-string 1))
                                (string-to-number (match-string 2))
@@ -1004,74 +988,41 @@ If no rgb.txt file is found, return nil."</span>
 </span><span class="comment-delimiter">;; </span><span class="comment">missing, the value of the variable will be nil, and rgb.txt will
 </span><span class="comment-delimiter">;; </span><span class="comment">not be used.
 </span>(<span class="keyword">defvar</span> <span class="variable-name">htmlize-color-rgb-hash</span> (htmlize-get-color-rgb-hash))
+
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">Face handling.
 </span>
-(<span class="keyword">defun</span> <span class="function-name">htmlize-face-specifies-property</span> (face prop)
-  <span class="comment-delimiter">;; </span><span class="comment">Return t if face specifies PROP, as opposed to it being inherited
-</span>  <span class="comment-delimiter">;; </span><span class="comment">from the default face.  The problem with e.g.
-</span>  <span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">face-foreground-instance</span></span><span class="comment">' is that it returns an instance for
-</span>  <span class="comment-delimiter">;; </span><span class="comment">EVERY face because every face inherits from the default face.
-</span>  <span class="comment-delimiter">;; </span><span class="comment">However, we'd like htmlize-face-{fore,back}ground to return nil
-</span>  <span class="comment-delimiter">;; </span><span class="comment">when called with a face that doesn't specify its own foreground
-</span>  <span class="comment-delimiter">;; </span><span class="comment">or background.
-</span>  (or (eq face 'default)
-      (assq 'global (specifier-spec-list (face-property face prop)))))
-
 (<span class="keyword">defun</span> <span class="function-name">htmlize-face-color-internal</span> (face fg)
   <span class="comment-delimiter">;; </span><span class="comment">Used only under GNU Emacs.  Return the color of FACE, but don't
 </span>  <span class="comment-delimiter">;; </span><span class="comment">return "unspecified-fg" or "unspecified-bg".  If the face is
 </span>  <span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">default</span></span><span class="comment">' and the color is unspecified, look up the color in
 </span>  <span class="comment-delimiter">;; </span><span class="comment">frame parameters.
 </span>  (<span class="keyword">let*</span> ((function (<span class="keyword">if</span> fg #'face-foreground #'face-background))
-         color)
-    (<span class="keyword">if</span> (&gt;= emacs-major-version 22)
-        <span class="comment-delimiter">;; </span><span class="comment">For GNU Emacs 22+ set INHERIT to get the inherited values.
-</span>        (setq color (funcall function face nil t))
-      (setq color (funcall function face))
-      <span class="comment-delimiter">;; </span><span class="comment">For GNU Emacs 21 (which has `</span><span class="comment"><span class="constant">face-attribute</span></span><span class="comment">'): if the color
-</span>      <span class="comment-delimiter">;; </span><span class="comment">is nil, recursively check for the face's parent.
-</span>      (<span class="keyword">when</span> (and (null color)
-                 (fboundp 'face-attribute)
-                 (face-attribute face <span class="builtin">:inherit</span>)
-                 (not (eq (face-attribute face <span class="builtin">:inherit</span>) 'unspecified)))
-        (setq color (htmlize-face-color-internal
-                     (face-attribute face <span class="builtin">:inherit</span>) fg))))
-    (<span class="keyword">when</span> (and (eq face 'default) (null color))
-      (setq color (cdr (assq (<span class="keyword">if</span> fg 'foreground-color 'background-color)
+         (color (funcall function face nil t)))
+    (<span class="keyword">when</span> (<span class="keyword">and</span> (eq face 'default) (null color))
+      (<span class="keyword">setq</span> color (cdr (assq (<span class="keyword">if</span> fg 'foreground-color 'background-color)
                              (frame-parameters)))))
-    (<span class="keyword">when</span> (or (eq color 'unspecified)
+    (<span class="keyword">when</span> (<span class="keyword">or</span> (eq color 'unspecified)
               (equal color <span class="string">"unspecified-fg"</span>)
               (equal color <span class="string">"unspecified-bg"</span>))
-      (setq color nil))
-    (<span class="keyword">when</span> (and (eq face 'default)
+      (<span class="keyword">setq</span> color nil))
+    (<span class="keyword">when</span> (<span class="keyword">and</span> (eq face 'default)
                (null color))
       <span class="comment-delimiter">;; </span><span class="comment">Assuming black on white doesn't seem right, but I can't think
 </span>      <span class="comment-delimiter">;; </span><span class="comment">of anything better to do.
-</span>      (setq color (<span class="keyword">if</span> fg <span class="string">"black"</span> <span class="string">"white"</span>)))
+</span>      (<span class="keyword">setq</span> color (<span class="keyword">if</span> fg <span class="string">"black"</span> <span class="string">"white"</span>)))
     color))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-face-foreground</span> (face)
   <span class="comment-delimiter">;; </span><span class="comment">Return the name of the foreground color of FACE.  If FACE does
 </span>  <span class="comment-delimiter">;; </span><span class="comment">not specify a foreground color, return nil.
-</span>  (<span class="keyword">cond</span> (htmlize-running-xemacs
-         <span class="comment-delimiter">;; </span><span class="comment">XEmacs.
-</span>         (and (htmlize-face-specifies-property face 'foreground)
-              (color-instance-name (face-foreground-instance face))))
-        (t
-         <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs.
-</span>         (htmlize-face-color-internal face t))))
+</span>  (htmlize-face-color-internal face t))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-face-background</span> (face)
   <span class="comment-delimiter">;; </span><span class="comment">Return the name of the background color of FACE.  If FACE does
 </span>  <span class="comment-delimiter">;; </span><span class="comment">not specify a background color, return nil.
-</span>  (<span class="keyword">cond</span> (htmlize-running-xemacs
-         <span class="comment-delimiter">;; </span><span class="comment">XEmacs.
-</span>         (and (htmlize-face-specifies-property face 'background)
-              (color-instance-name (face-background-instance face))))
-        (t
-         <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs.
-</span>         (htmlize-face-color-internal face nil))))
+</span>  <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs.
+</span>  (htmlize-face-color-internal face nil))
 
 <span class="comment-delimiter">;; </span><span class="comment">Convert COLOR to the #RRGGBB string.  If COLOR is already in that
 </span><span class="comment-delimiter">;; </span><span class="comment">format, it's left unchanged.
@@ -1085,29 +1036,23 @@ If no rgb.txt file is found, return nil."</span>
 </span>           )
           ((string-match <span class="string">"\\`#"</span> color)
            <span class="comment-delimiter">;; </span><span class="comment">The color is already in #rrggbb format.
-</span>           (setq rgb-string color))
-          ((and htmlize-use-rgb-txt
+</span>           (<span class="keyword">setq</span> rgb-string color))
+          ((<span class="keyword">and</span> htmlize-use-rgb-txt
                 htmlize-color-rgb-hash)
            <span class="comment-delimiter">;; </span><span class="comment">Use of rgb.txt is requested, and it's available on the
 </span>           <span class="comment-delimiter">;; </span><span class="comment">system.  Use it.
-</span>           (setq rgb-string (gethash (downcase color) htmlize-color-rgb-hash)))
+</span>           (<span class="keyword">setq</span> rgb-string (gethash (downcase color) htmlize-color-rgb-hash)))
           (t
            <span class="comment-delimiter">;; </span><span class="comment">We're getting the RGB components from Emacs.
-</span>           (<span class="keyword">let</span> ((rgb
-                  (<span class="keyword">if</span> (fboundp 'color-instance-rgb-components)
-                      (mapcar (<span class="keyword">lambda</span> (arg)
+</span>           (<span class="keyword">let</span> ((rgb (mapcar (<span class="keyword">lambda</span> (arg)
                                 (/ arg 256))
-                              (color-instance-rgb-components
-                               (make-color-instance color)))
-                    (mapcar (<span class="keyword">lambda</span> (arg)
-                              (/ arg 256))
-                            (color-values color)))))
+                              (color-values color))))
              (<span class="keyword">when</span> rgb
-               (setq rgb-string (apply #'format <span class="string">"#%02x%02x%02x"</span> rgb))))))
+               (<span class="keyword">setq</span> rgb-string (apply #'format <span class="string">"#%02x%02x%02x"</span> rgb))))))
     <span class="comment-delimiter">;; </span><span class="comment">If RGB-STRING is still nil, it means the color cannot be found,
 </span>    <span class="comment-delimiter">;; </span><span class="comment">for whatever reason.  In that case just punt and return COLOR.
 </span>    <span class="comment-delimiter">;; </span><span class="comment">Most browsers support a decent set of color names anyway.
-</span>    (or rgb-string color)))
+</span>    (<span class="keyword">or</span> rgb-string color)))
 
 <span class="comment-delimiter">;; </span><span class="comment">We store the face properties we care about into an
 </span><span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">htmlize-fstruct</span></span><span class="comment">' type.  That way we only have to analyze face
@@ -1117,11 +1062,11 @@ If no rgb.txt file is found, return nil."</span>
 </span><span class="comment-delimiter">;; </span><span class="comment">type `</span><span class="comment"><span class="constant">htmlize-fstruct</span></span><span class="comment">', while the term "face" is reserved for Emacs
 </span><span class="comment-delimiter">;; </span><span class="comment">faces.
 </span>
-(<span class="keyword">defstruct</span> <span class="type">htmlize-fstruct</span>
+(<span class="keyword">cl-defstruct</span> <span class="type">htmlize-fstruct</span>
   foreground                            <span class="comment-delimiter">; </span><span class="comment">foreground color, #rrggbb
 </span>  background                            <span class="comment-delimiter">; </span><span class="comment">background color, #rrggbb
 </span>  size                                  <span class="comment-delimiter">; </span><span class="comment">size
-</span>  boldp                                 <span class="comment-delimiter">; </span><span class="comment">whether face is bold
+</span>  boldp                                         <span class="comment-delimiter">; </span><span class="comment">whether face is bold
 </span>  italicp                               <span class="comment-delimiter">; </span><span class="comment">whether face is italic
 </span>  underlinep                            <span class="comment-delimiter">; </span><span class="comment">whether face is underlined
 </span>  overlinep                             <span class="comment-delimiter">; </span><span class="comment">whether face is overlined
@@ -1129,42 +1074,53 @@ If no rgb.txt file is found, return nil."</span>
 </span>  css-name                              <span class="comment-delimiter">; </span><span class="comment">CSS name of face
 </span>  )
 
-(<span class="keyword">defun</span> <span class="function-name">htmlize-face-emacs21-attr</span> (fstruct attr value)
+(<span class="keyword">defun</span> <span class="function-name">htmlize-face-set-from-keyword-attr</span> (fstruct attr value)
   <span class="comment-delimiter">;; </span><span class="comment">For ATTR and VALUE, set the equivalent value in FSTRUCT.
-</span>  (<span class="keyword">case</span> attr
+</span>  (<span class="keyword">cl-case</span> attr
     (<span class="builtin">:foreground</span>
-     (setf (htmlize-fstruct-foreground fstruct) (htmlize-color-to-rgb value)))
+     (<span class="keyword">setf</span> (htmlize-fstruct-foreground fstruct) (htmlize-color-to-rgb value)))
     (<span class="builtin">:background</span>
-     (setf (htmlize-fstruct-background fstruct) (htmlize-color-to-rgb value)))
+     (<span class="keyword">setf</span> (htmlize-fstruct-background fstruct) (htmlize-color-to-rgb value)))
     (<span class="builtin">:height</span>
-     (setf (htmlize-fstruct-size fstruct) value))
+     (<span class="keyword">setf</span> (htmlize-fstruct-size fstruct) value))
     (<span class="builtin">:weight</span>
      (<span class="keyword">when</span> (string-match (symbol-name value) <span class="string">"bold"</span>)
-       (setf (htmlize-fstruct-boldp fstruct) t)))
+       (<span class="keyword">setf</span> (htmlize-fstruct-boldp fstruct) t)))
     (<span class="builtin">:slant</span>
-     (setf (htmlize-fstruct-italicp fstruct) (or (eq value 'italic)
+     (<span class="keyword">setf</span> (htmlize-fstruct-italicp fstruct) (<span class="keyword">or</span> (eq value 'italic)
                                                  (eq value 'oblique))))
     (<span class="builtin">:bold</span>
-     (setf (htmlize-fstruct-boldp fstruct) value))
+     (<span class="keyword">setf</span> (htmlize-fstruct-boldp fstruct) value))
     (<span class="builtin">:italic</span>
-     (setf (htmlize-fstruct-italicp fstruct) value))
+     (<span class="keyword">setf</span> (htmlize-fstruct-italicp fstruct) value))
     (<span class="builtin">:underline</span>
-     (setf (htmlize-fstruct-underlinep fstruct) value))
+     (<span class="keyword">setf</span> (htmlize-fstruct-underlinep fstruct) value))
     (<span class="builtin">:overline</span>
-     (setf (htmlize-fstruct-overlinep fstruct) value))
+     (<span class="keyword">setf</span> (htmlize-fstruct-overlinep fstruct) value))
     (<span class="builtin">:strike-through</span>
-     (setf (htmlize-fstruct-strikep fstruct) value))))
+     (<span class="keyword">setf</span> (htmlize-fstruct-strikep fstruct) value))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-face-size</span> (face)
   <span class="comment-delimiter">;; </span><span class="comment">The size (height) of FACE, taking inheritance into account.
 </span>  <span class="comment-delimiter">;; </span><span class="comment">Only works in Emacs 21 and later.
-</span>  (<span class="keyword">let</span> ((size-list
-         (<span class="keyword">loop</span>
-          for f = face then (face-attribute f <span class="builtin">:inherit</span>)
-          until (or (not f) (eq f 'unspecified))
-          for h = (face-attribute f <span class="builtin">:height</span>)
-          collect (<span class="keyword">if</span> (eq h 'unspecified) nil h))))
-    (reduce 'htmlize-merge-size (cons nil size-list))))
+</span>  (<span class="keyword">let*</span> ((face-list (list face))
+         (head face-list)
+         (tail face-list))
+    (<span class="keyword">while</span> head
+      (<span class="keyword">let</span> ((inherit (face-attribute (car head) <span class="builtin">:inherit</span>)))
+        (<span class="keyword">cond</span> ((listp inherit)
+               (<span class="keyword">setq</span> tail (last inherit)))
+              ((eq inherit 'unspecified))
+              (t
+               (setcdr tail (list inherit))
+               (<span class="keyword">setq</span> tail (cdr tail)))))
+      (<span class="keyword">pop</span> head))
+    (<span class="keyword">let</span> ((size-list
+           (<span class="keyword">cl-loop</span>
+            for f in face-list
+            for h = (<span class="keyword">and</span> (facep f) (face-attribute f <span class="builtin">:height</span>))
+            collect (<span class="keyword">if</span> (eq h 'unspecified) nil h))))
+      (cl-reduce 'htmlize-merge-size (cons nil size-list)))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-face-css-name</span> (face)
   <span class="comment-delimiter">;; </span><span class="comment">Generate the css-name property for the given face.  Emacs places
@@ -1175,62 +1131,53 @@ If no rgb.txt file is found, return nil."</span>
 </span>  (<span class="keyword">let</span> ((name (downcase (symbol-name face))))
     (<span class="keyword">when</span> (string-match <span class="string">"\\`font-lock-"</span> name)
       <span class="comment-delimiter">;; </span><span class="comment">font-lock-FOO-face -&gt; FOO.
-</span>      (setq name (replace-match <span class="string">""</span> t t name)))
+</span>      (<span class="keyword">setq</span> name (replace-match <span class="string">""</span> t t name)))
     (<span class="keyword">when</span> (string-match <span class="string">"-face\\'"</span> name)
       <span class="comment-delimiter">;; </span><span class="comment">Drop the redundant "-face" suffix.
-</span>      (setq name (replace-match <span class="string">""</span> t t name)))
+</span>      (<span class="keyword">setq</span> name (replace-match <span class="string">""</span> t t name)))
     (<span class="keyword">while</span> (string-match <span class="string">"[</span><span class="string"><span class="negation-char">^</span></span><span class="string">-a-zA-Z0-9]"</span> name)
       <span class="comment-delimiter">;; </span><span class="comment">Drop the non-alphanumerics.
-</span>      (setq name (replace-match <span class="string">"X"</span> t t name)))
+</span>      (<span class="keyword">setq</span> name (replace-match <span class="string">"X"</span> t t name)))
     (<span class="keyword">when</span> (string-match <span class="string">"\\`[-0-9]"</span> name)
       <span class="comment-delimiter">;; </span><span class="comment">CSS identifiers may not start with a digit.
-</span>      (setq name (concat <span class="string">"X"</span> name)))
+</span>      (<span class="keyword">setq</span> name (concat <span class="string">"X"</span> name)))
     <span class="comment-delimiter">;; </span><span class="comment">After these transformations, the face could come out empty.
 </span>    (<span class="keyword">when</span> (equal name <span class="string">""</span>)
-      (setq name <span class="string">"face"</span>))
+      (<span class="keyword">setq</span> name <span class="string">"face"</span>))
     <span class="comment-delimiter">;; </span><span class="comment">Apply the prefix.
 </span>    (concat htmlize-css-name-prefix name)))
 
-(<span class="keyword">defun</span> <span class="function-name">htmlize-face-to-fstruct</span> (face)
-  <span class="doc">"Convert Emacs face FACE to fstruct."</span>
+(<span class="keyword">defun</span> <span class="function-name">htmlize-face-to-fstruct-1</span> (face)
+  <span class="doc">"Convert Emacs face FACE to fstruct, internal."</span>
   (<span class="keyword">let</span> ((fstruct (make-htmlize-fstruct
                   <span class="builtin">:foreground</span> (htmlize-color-to-rgb
                                (htmlize-face-foreground face))
                   <span class="builtin">:background</span> (htmlize-color-to-rgb
                                (htmlize-face-background face)))))
-    (<span class="keyword">if</span> htmlize-running-xemacs
-        <span class="comment-delimiter">;; </span><span class="comment">XEmacs doesn't provide a way to detect whether a face is
-</span>        <span class="comment-delimiter">;; </span><span class="comment">bold or italic, so we need to examine the font instance.
-</span>        (<span class="keyword">let*</span> ((font-instance (face-font-instance face))
-               (props (font-instance-properties font-instance)))
-          (<span class="keyword">when</span> (equalp (cdr (assq 'WEIGHT_NAME props)) <span class="string">"bold"</span>)
-            (setf (htmlize-fstruct-boldp fstruct) t))
-          (<span class="keyword">when</span> (or (equalp (cdr (assq 'SLANT props)) <span class="string">"i"</span>)
-                    (equalp (cdr (assq 'SLANT props)) <span class="string">"o"</span>))
-            (setf (htmlize-fstruct-italicp fstruct) t))
-          (setf (htmlize-fstruct-strikep fstruct)
-                (face-strikethru-p face))
-          (setf (htmlize-fstruct-underlinep fstruct)
-                (face-underline-p face)))
-      <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs
-</span>      (<span class="keyword">dolist</span> (attr '(<span class="builtin">:weight</span> <span class="builtin">:slant</span> <span class="builtin">:underline</span> <span class="builtin">:overline</span> <span class="builtin">:strike-through</span>))
-        (<span class="keyword">let</span> ((value (<span class="keyword">if</span> (&gt;= emacs-major-version 22)
-                         <span class="comment-delimiter">;; </span><span class="comment">Use the INHERIT arg in GNU Emacs 22.
-</span>                         (face-attribute face attr nil t)
-                       <span class="comment-delimiter">;; </span><span class="comment">Otherwise, fake it.
-</span>                       (<span class="keyword">let</span> ((face face))
-                         (<span class="keyword">while</span> (and (eq (face-attribute face attr)
-                                         'unspecified)
-                                     (not (eq (face-attribute face <span class="builtin">:inherit</span>)
-                                              'unspecified)))
-                           (setq face (face-attribute face <span class="builtin">:inherit</span>)))
-                         (face-attribute face attr)))))
-          (<span class="keyword">when</span> (and value (not (eq value 'unspecified)))
-            (htmlize-face-emacs21-attr fstruct attr value))))
-      (<span class="keyword">let</span> ((size (htmlize-face-size face)))
-        (<span class="keyword">unless</span> (eql size 1.0)  <span class="comment-delimiter">; </span><span class="comment">ignore non-spec
-</span>          (setf (htmlize-fstruct-size fstruct) size))))
-    (setf (htmlize-fstruct-css-name fstruct) (htmlize-face-css-name face))
+    <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs
+</span>    (<span class="keyword">dolist</span> (attr '(<span class="builtin">:weight</span> <span class="builtin">:slant</span> <span class="builtin">:underline</span> <span class="builtin">:overline</span> <span class="builtin">:strike-through</span>))
+      (<span class="keyword">let</span> ((value (face-attribute face attr nil t)))
+        (<span class="keyword">when</span> (<span class="keyword">and</span> value (not (eq value 'unspecified)))
+          (htmlize-face-set-from-keyword-attr fstruct attr value))))
+    (<span class="keyword">let</span> ((size (htmlize-face-size face)))
+      (<span class="keyword">unless</span> (eql size 1.0)            <span class="comment-delimiter">; </span><span class="comment">ignore non-spec
+</span>        (<span class="keyword">setf</span> (htmlize-fstruct-size fstruct) size)))
+    (<span class="keyword">setf</span> (htmlize-fstruct-css-name fstruct) (htmlize-face-css-name face))
+    fstruct))
+
+(<span class="keyword">defun</span> <span class="function-name">htmlize-face-to-fstruct</span> (face)
+  (<span class="keyword">let*</span> ((face-list (<span class="keyword">or</span> (<span class="keyword">and</span> (symbolp face)
+                             (cdr (assq face face-remapping-alist)))
+                        (list face)))
+         (fstruct (htmlize-merge-faces
+                   (mapcar (<span class="keyword">lambda</span> (face)
+                             (<span class="keyword">if</span> (symbolp face)
+                                 (<span class="keyword">or</span> (htmlize-get-override-fstruct face)
+                                     (htmlize-face-to-fstruct-1 face))
+                               (htmlize-attrlist-to-fstruct face)))
+                           (nreverse face-list)))))
+    (<span class="keyword">when</span> (symbolp face)
+      (<span class="keyword">setf</span> (htmlize-fstruct-css-name fstruct) (htmlize-face-css-name face)))
     fstruct))
 
 (<span class="keyword">defmacro</span> <span class="function-name">htmlize-copy-attr-if-set</span> (attr-list dest source)
@@ -1241,10 +1188,10 @@ If no rgb.txt file is found, return nil."</span>
 </span>  <span class="comment-delimiter">;;   </span><span class="comment">...)
 </span>  <span class="comment-delimiter">;; </span><span class="comment">for the given list of boolean attributes.
 </span>  (cons 'progn
-        (<span class="keyword">loop</span> for attr in attr-list
-              for attr-sym = (intern (format <span class="string">"htmlize-fstruct-%s"</span> attr))
-              collect `(<span class="keyword">when</span> (,attr-sym ,source)
-                         (setf (,attr-sym ,dest) (,attr-sym ,source))))))
+        (<span class="keyword">cl-loop</span> for attr in attr-list
+                 for attr-sym = (intern (format <span class="string">"htmlize-fstruct-%s"</span> attr))
+                 collect `(<span class="keyword">when</span> (,attr-sym ,source)
+                            (<span class="keyword">setf</span> (,attr-sym ,dest) (,attr-sym ,source))))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-merge-size</span> (merged next)
   <span class="comment-delimiter">;; </span><span class="comment">Calculate the size of the merge of MERGED and NEXT.
@@ -1255,10 +1202,10 @@ If no rgb.txt file is found, return nil."</span>
         ((integerp merged) (round (* merged next)))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-merge-two-faces</span> (merged next)
-  (htmlize-copy-attr-if-set
+  (<span class="keyword">htmlize-copy-attr-if-set</span>
    (foreground background boldp italicp underlinep overlinep strikep)
    merged next)
-  (setf (htmlize-fstruct-size merged)
+  (<span class="keyword">setf</span> (htmlize-fstruct-size merged)
         (htmlize-merge-size (htmlize-fstruct-size merged)
                             (htmlize-fstruct-size next)))
   merged)
@@ -1272,8 +1219,8 @@ If no rgb.txt file is found, return nil."</span>
 </span>         <span class="comment-delimiter">;; </span><span class="comment">return it.
 </span>         (car fstruct-list))
         (t
-         (reduce #'htmlize-merge-two-faces
-                 (cons (make-htmlize-fstruct) fstruct-list)))))
+         (cl-reduce #'htmlize-merge-two-faces
+                    (cons (make-htmlize-fstruct) fstruct-list)))))
 
 <span class="comment-delimiter">;; </span><span class="comment">GNU Emacs 20+ supports attribute lists in `</span><span class="comment"><span class="constant">face</span></span><span class="comment">' properties.  For
 </span><span class="comment-delimiter">;; </span><span class="comment">example, you can use `(:foreground "red" :weight bold)' as an
@@ -1283,25 +1230,25 @@ If no rgb.txt file is found, return nil."</span>
 </span><span class="comment-delimiter">;; </span><span class="comment">htmlize supports attrlist by converting them to fstructs, the same
 </span><span class="comment-delimiter">;; </span><span class="comment">as with regular faces.
 </span>
-(<span class="keyword">defun</span> <span class="function-name">htmlize-attrlist-to-fstruct</span> (attrlist)
+(<span class="keyword">defun</span> <span class="function-name">htmlize-attrlist-to-fstruct</span> (attrlist <span class="type">&amp;optional</span> name)
   <span class="comment-delimiter">;; </span><span class="comment">Like htmlize-face-to-fstruct, but accepts an ATTRLIST as input.
 </span>  (<span class="keyword">let</span> ((fstruct (make-htmlize-fstruct)))
     (<span class="keyword">cond</span> ((eq (car attrlist) 'foreground-color)
            <span class="comment-delimiter">;; </span><span class="comment">ATTRLIST is (foreground-color . COLOR)
-</span>           (setf (htmlize-fstruct-foreground fstruct)
+</span>           (<span class="keyword">setf</span> (htmlize-fstruct-foreground fstruct)
                  (htmlize-color-to-rgb (cdr attrlist))))
           ((eq (car attrlist) 'background-color)
            <span class="comment-delimiter">;; </span><span class="comment">ATTRLIST is (background-color . COLOR)
-</span>           (setf (htmlize-fstruct-background fstruct)
+</span>           (<span class="keyword">setf</span> (htmlize-fstruct-background fstruct)
                  (htmlize-color-to-rgb (cdr attrlist))))
           (t
            <span class="comment-delimiter">;; </span><span class="comment">ATTRLIST is a plist.
 </span>           (<span class="keyword">while</span> attrlist
-             (<span class="keyword">let</span> ((attr (pop attrlist))
-                   (value (pop attrlist)))
-               (<span class="keyword">when</span> (and value (not (eq value 'unspecified)))
-                 (htmlize-face-emacs21-attr fstruct attr value))))))
-    (setf (htmlize-fstruct-css-name fstruct) <span class="string">"ATTRLIST"</span>)
+             (<span class="keyword">let</span> ((attr (<span class="keyword">pop</span> attrlist))
+                   (value (<span class="keyword">pop</span> attrlist)))
+               (<span class="keyword">when</span> (<span class="keyword">and</span> value (not (eq value 'unspecified)))
+                 (htmlize-face-set-from-keyword-attr fstruct attr value))))))
+    (<span class="keyword">setf</span> (htmlize-fstruct-css-name fstruct) (<span class="keyword">or</span> name <span class="string">"custom"</span>))
     fstruct))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-decode-face-prop</span> (prop)
@@ -1322,21 +1269,32 @@ If no rgb.txt file is found, return nil."</span>
 </span>  (<span class="keyword">cond</span> ((null prop)
          nil)
         ((symbolp prop)
-         (and (facep prop)
+         (<span class="keyword">and</span> (facep prop)
               (list prop)))
         ((stringp prop)
-         (and (facep (intern-soft prop))
+         (<span class="keyword">and</span> (facep (intern-soft prop))
               (list prop)))
         ((atom prop)
          nil)
-        ((and (symbolp (car prop))
+        ((<span class="keyword">and</span> (symbolp (car prop))
               (eq ?: (aref (symbol-name (car prop)) 0)))
          (list prop))
-        ((or (eq (car prop) 'foreground-color)
+        ((<span class="keyword">or</span> (eq (car prop) 'foreground-color)
              (eq (car prop) 'background-color))
          (list prop))
         (t
          (apply #'nconc (mapcar #'htmlize-decode-face-prop prop)))))
+
+(<span class="keyword">defun</span> <span class="function-name">htmlize-get-override-fstruct</span> (face)
+  (<span class="keyword">let*</span> ((raw-def (plist-get htmlize-face-overrides face))
+         (def (<span class="keyword">cond</span> ((stringp raw-def) (list <span class="builtin">:foreground</span> raw-def))
+                    ((listp raw-def) raw-def)
+                    (t
+                     (<span class="warning">error</span> (format (concat <span class="string">"face override must be an "</span>
+                                            <span class="string">"attribute list or string, got %s"</span>)
+                                    raw-def))))))
+    (<span class="keyword">and</span> def
+         (htmlize-attrlist-to-fstruct def (symbol-name face)))))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-make-face-map</span> (faces)
   <span class="comment-delimiter">;; </span><span class="comment">Return a hash table mapping Emacs faces to htmlize's fstructs.
@@ -1348,20 +1306,18 @@ If no rgb.txt file is found, return nil."</span>
       (<span class="keyword">unless</span> (gethash face face-map)
         <span class="comment-delimiter">;; </span><span class="comment">Haven't seen FACE yet; convert it to an fstruct and cache
 </span>        <span class="comment-delimiter">;; </span><span class="comment">it.
-</span>        (<span class="keyword">let</span> ((fstruct (<span class="keyword">if</span> (symbolp face)
-                           (htmlize-face-to-fstruct face)
-                         (htmlize-attrlist-to-fstruct face))))
-          (setf (gethash face face-map) fstruct)
+</span>        (<span class="keyword">let</span> ((fstruct (htmlize-face-to-fstruct face)))
+          (<span class="keyword">setf</span> (gethash face face-map) fstruct)
           (<span class="keyword">let*</span> ((css-name (htmlize-fstruct-css-name fstruct))
                  (new-name css-name)
                  (i 0))
             <span class="comment-delimiter">;; </span><span class="comment">Uniquify the face's css-name by using NAME-1, NAME-2,
 </span>            <span class="comment-delimiter">;; </span><span class="comment">etc.
 </span>            (<span class="keyword">while</span> (member new-name css-names)
-              (setq new-name (format <span class="string">"%s-%s"</span> css-name (incf i))))
+              (<span class="keyword">setq</span> new-name (format <span class="string">"%s-%s"</span> css-name (<span class="keyword">cl-incf</span> i))))
             (<span class="keyword">unless</span> (equal new-name css-name)
-              (setf (htmlize-fstruct-css-name fstruct) new-name))
-            (push new-name css-names)))))
+              (<span class="keyword">setf</span> (htmlize-fstruct-css-name fstruct) new-name))
+            (<span class="keyword">push</span> new-name css-names)))))
     face-map))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-unstringify-face</span> (face)
@@ -1372,122 +1328,62 @@ If no rgb.txt file is found, return nil."</span>
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-faces-in-buffer</span> ()
   <span class="doc">"Return a list of faces used in the current buffer.
-Under XEmacs, this returns the set of faces specified by the extents
-with the `</span><span class="doc"><span class="constant">face</span></span><span class="doc">' property.  (This covers text properties as well.)  Under
-GNU Emacs, it returns the set of faces specified by the `</span><span class="doc"><span class="constant">face</span></span><span class="doc">' text
-property and by buffer overlays that specify `</span><span class="doc"><span class="constant">face</span></span><span class="doc">'."</span>
+This is the set of faces specified by the `</span><span class="doc"><span class="constant">face</span></span><span class="doc">' text property and by buffer
+overlays that specify `</span><span class="doc"><span class="constant">face</span></span><span class="doc">'."</span>
   (<span class="keyword">let</span> (faces)
-    <span class="comment-delimiter">;; </span><span class="comment">Testing for (fboundp 'map-extents) doesn't work because W3
-</span>    <span class="comment-delimiter">;; </span><span class="comment">defines `</span><span class="comment"><span class="constant">map-extents</span></span><span class="comment">' under FSF.
-</span>    (<span class="keyword">if</span> htmlize-running-xemacs
-        (<span class="keyword">let</span> (face-prop)
-          (map-extents (<span class="keyword">lambda</span> (extent ignored)
-                         (setq face-prop (extent-face extent)
-                               <span class="comment-delimiter">;; </span><span class="comment">FACE-PROP can be a face or a list of
-</span>                               <span class="comment-delimiter">;; </span><span class="comment">faces.
-</span>                               faces (<span class="keyword">if</span> (listp face-prop)
-                                         (union face-prop faces)
-                                       (adjoin face-prop faces)))
-                         nil)
-                       nil
-                       <span class="comment-delimiter">;; </span><span class="comment">Specify endpoints explicitly to respect
-</span>                       <span class="comment-delimiter">;; </span><span class="comment">narrowing.
-</span>                       (point-min) (point-max) nil nil 'face))
-      <span class="comment-delimiter">;; </span><span class="comment">FSF Emacs code.
-</span>      <span class="comment-delimiter">;; </span><span class="comment">Faces used by text properties.
-</span>      (<span class="keyword">let</span> ((pos (point-min)) face-prop next)
-        (<span class="keyword">while</span> (&lt; pos (point-max))
-          (setq face-prop (get-text-property pos 'face)
-                next (or (next-single-property-change pos 'face) (point-max)))
-          (setq faces (nunion (htmlize-decode-face-prop face-prop)
-                              faces <span class="builtin">:test</span> 'equal))
-          (setq pos next)))
-      <span class="comment-delimiter">;; </span><span class="comment">Faces used by overlays.
-</span>      (<span class="keyword">dolist</span> (overlay (overlays-in (point-min) (point-max)))
-        (<span class="keyword">let</span> ((face-prop (overlay-get overlay 'face)))
-          (setq faces (nunion (htmlize-decode-face-prop face-prop)
-                              faces <span class="builtin">:test</span> 'equal)))))
+    <span class="comment-delimiter">;; </span><span class="comment">Faces used by text properties.
+</span>    (<span class="keyword">let</span> ((pos (point-min)) face-prop next)
+      (<span class="keyword">while</span> (&lt; pos (point-max))
+        (<span class="keyword">setq</span> face-prop (get-text-property pos 'face)
+              next (<span class="keyword">or</span> (next-single-property-change pos 'face) (point-max)))
+        (<span class="keyword">setq</span> faces (cl-nunion (htmlize-decode-face-prop face-prop)
+                               faces <span class="builtin">:test</span> 'equal))
+        (<span class="keyword">setq</span> pos next)))
+    <span class="comment-delimiter">;; </span><span class="comment">Faces used by overlays.
+</span>    (<span class="keyword">dolist</span> (overlay (overlays-in (point-min) (point-max)))
+      (<span class="keyword">let</span> ((face-prop (overlay-get overlay 'face)))
+        (<span class="keyword">setq</span> faces (cl-nunion (htmlize-decode-face-prop face-prop)
+                               faces <span class="builtin">:test</span> 'equal))))
     faces))
 
 <span class="comment-delimiter">;; </span><span class="comment">htmlize-faces-at-point returns the faces in use at point.  The
 </span><span class="comment-delimiter">;; </span><span class="comment">faces are sorted by increasing priority, i.e. the last face takes
 </span><span class="comment-delimiter">;; </span><span class="comment">precedence.
 </span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;; </span><span class="comment">Under XEmacs, this returns all the faces in all the extents at
-</span><span class="comment-delimiter">;; </span><span class="comment">point.  Under GNU Emacs, this returns all the faces in the `</span><span class="comment"><span class="constant">face</span></span><span class="comment">'
-</span><span class="comment-delimiter">;; </span><span class="comment">property and all the faces in the overlays at point.
+</span><span class="comment-delimiter">;; </span><span class="comment">This returns all the faces in the `</span><span class="comment"><span class="constant">face</span></span><span class="comment">' property and all the faces
+</span><span class="comment-delimiter">;; </span><span class="comment">in the overlays at point.
 </span>
-(<span class="keyword">cond</span> (htmlize-running-xemacs
-       (<span class="keyword">defun</span> <span class="function-name">htmlize-faces-at-point</span> ()
-         (<span class="keyword">let</span> (extent extent-list face-list face-prop)
-           (<span class="keyword">while</span> (setq extent (extent-at (point) nil 'face extent))
-             (push extent extent-list))
-           <span class="comment-delimiter">;; </span><span class="comment">extent-list is in reverse display order, meaning that
-</span>           <span class="comment-delimiter">;; </span><span class="comment">smallest ones come last.  That is the order we want,
-</span>           <span class="comment-delimiter">;; </span><span class="comment">except it can be overridden by the `</span><span class="comment"><span class="constant">priority</span></span><span class="comment">' property.
-</span>           (setq extent-list (stable-sort extent-list #'&lt;
-                                          <span class="builtin">:key</span> #'extent-priority))
-           (<span class="keyword">dolist</span> (extent extent-list)
-             (setq face-prop (extent-face extent))
-             <span class="comment-delimiter">;; </span><span class="comment">extent's face-list is in reverse order from what we
-</span>             <span class="comment-delimiter">;; </span><span class="comment">want, but the `</span><span class="comment"><span class="constant">nreverse</span></span><span class="comment">' below will take care of it.
-</span>             (setq face-list (<span class="keyword">if</span> (listp face-prop)
-                                 (append face-prop face-list)
-                               (cons face-prop face-list))))
-           (nreverse face-list))))
-      (t
-       (<span class="keyword">defun</span> <span class="function-name">htmlize-faces-at-point</span> ()
-         (<span class="keyword">let</span> (all-faces)
-           <span class="comment-delimiter">;; </span><span class="comment">Faces from text properties.
-</span>           (<span class="keyword">let</span> ((face-prop (get-text-property (point) 'face)))
-             <span class="comment-delimiter">;; </span><span class="comment">we need to reverse the `</span><span class="comment"><span class="constant">face</span></span><span class="comment">' prop because we want
-</span>             <span class="comment-delimiter">;; </span><span class="comment">more specific faces to come later
-</span>             (setq all-faces (nreverse (htmlize-decode-face-prop face-prop))))
-           <span class="comment-delimiter">;; </span><span class="comment">Faces from overlays.
-</span>           (<span class="keyword">let</span> ((overlays
-                  <span class="comment-delimiter">;; </span><span class="comment">Collect overlays at point that specify `</span><span class="comment"><span class="constant">face</span></span><span class="comment">'.
-</span>                  (delete-if-not (<span class="keyword">lambda</span> (o)
-                                   (overlay-get o 'face))
-                                 (overlays-at (point))))
-                 list face-prop)
-             <span class="comment-delimiter">;; </span><span class="comment">Sort the overlays so the smaller (more specific) ones
-</span>             <span class="comment-delimiter">;; </span><span class="comment">come later.  The number of overlays at each one
-</span>             <span class="comment-delimiter">;; </span><span class="comment">position should be very small, so the sort shouldn't
-</span>             <span class="comment-delimiter">;; </span><span class="comment">slow things down.
-</span>             (setq overlays (sort* overlays
-                                   <span class="comment-delimiter">;; </span><span class="comment">Sort by ascending...
-</span>                                   #'&lt;
-                                   <span class="comment-delimiter">;; </span><span class="comment">...overlay size.
-</span>                                   <span class="builtin">:key</span> (<span class="keyword">lambda</span> (o)
-                                          (- (overlay-end o)
-                                             (overlay-start o)))))
-             <span class="comment-delimiter">;; </span><span class="comment">Overlay priorities, if present, override the above
-</span>             <span class="comment-delimiter">;; </span><span class="comment">established order.  Larger overlay priority takes
-</span>             <span class="comment-delimiter">;; </span><span class="comment">precedence and therefore comes later in the list.
-</span>             (setq overlays (stable-sort
-                             overlays
-                             <span class="comment-delimiter">;; </span><span class="comment">Reorder (stably) by acending...
-</span>                             #'&lt;
-                             <span class="comment-delimiter">;; </span><span class="comment">...overlay priority.
-</span>                             <span class="builtin">:key</span> (<span class="keyword">lambda</span> (o)
-                                    (or (overlay-get o 'priority) 0))))
-             (<span class="keyword">dolist</span> (overlay overlays)
-               (setq face-prop (overlay-get overlay 'face)
-                     list (nconc (htmlize-decode-face-prop face-prop) list)))
-             <span class="comment-delimiter">;; </span><span class="comment">Under "Merging Faces" the manual explicitly states
-</span>             <span class="comment-delimiter">;; </span><span class="comment">that faces specified by overlays take precedence over
-</span>             <span class="comment-delimiter">;; </span><span class="comment">faces specified by text properties.
-</span>             (setq all-faces (nconc all-faces list)))
-           all-faces))))
+(<span class="keyword">defun</span> <span class="function-name">htmlize-faces-at-point</span> ()
+  (<span class="keyword">let</span> (all-faces)
+    <span class="comment-delimiter">;; </span><span class="comment">Faces from text properties.
+</span>    (<span class="keyword">let</span> ((face-prop (get-text-property (point) 'face)))
+      <span class="comment-delimiter">;; </span><span class="comment">we need to reverse the `</span><span class="comment"><span class="constant">face</span></span><span class="comment">' prop because we want
+</span>      <span class="comment-delimiter">;; </span><span class="comment">more specific faces to come later
+</span>      (<span class="keyword">setq</span> all-faces (nreverse (htmlize-decode-face-prop face-prop))))
+    <span class="comment-delimiter">;; </span><span class="comment">Faces from overlays.
+</span>    (<span class="keyword">let</span> ((overlays
+           <span class="comment-delimiter">;; </span><span class="comment">Collect overlays at point that specify `</span><span class="comment"><span class="constant">face</span></span><span class="comment">'.
+</span>           (cl-delete-if-not (<span class="keyword">lambda</span> (o)
+                               (overlay-get o 'face))
+                             (nreverse (overlays-at (point) t))))
+          list face-prop)
+      (<span class="keyword">dolist</span> (overlay overlays)
+        (<span class="keyword">setq</span> face-prop (overlay-get overlay 'face)
+              list (nconc (htmlize-decode-face-prop face-prop) list)))
+      <span class="comment-delimiter">;; </span><span class="comment">Under "Merging Faces" the manual explicitly states
+</span>      <span class="comment-delimiter">;; </span><span class="comment">that faces specified by overlays take precedence over
+</span>      <span class="comment-delimiter">;; </span><span class="comment">faces specified by text properties.
+</span>      (<span class="keyword">setq</span> all-faces (nconc all-faces list)))
+    all-faces))
 <hr />
 <span class="comment-delimiter">;; </span><span class="comment">htmlize supports generating HTML in several flavors, some of which
 </span><span class="comment-delimiter">;; </span><span class="comment">use CSS, and others the &lt;font&gt; element.  We take an OO approach and
 </span><span class="comment-delimiter">;; </span><span class="comment">define "methods" that indirect to the functions that depend on
 </span><span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">htmlize-output-type</span></span><span class="comment">'.  The currently used methods are `</span><span class="comment"><span class="constant">doctype</span></span><span class="comment">',
-</span><span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">insert-head</span></span><span class="comment">', `</span><span class="comment"><span class="constant">body-tag</span></span><span class="comment">', and `</span><span class="comment"><span class="constant">text-markup</span></span><span class="comment">'.  Not all output types
-</span><span class="comment-delimiter">;; </span><span class="comment">define all methods.
+</span><span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">insert-head</span></span><span class="comment">', `</span><span class="comment"><span class="constant">body-tag</span></span><span class="comment">', `</span><span class="comment"><span class="constant">pre-tag</span></span><span class="comment">', and `</span><span class="comment"><span class="constant">text-markup</span></span><span class="comment">'.  Not all
+</span><span class="comment-delimiter">;; </span><span class="comment">output types define all methods.
 </span><span class="comment-delimiter">;;</span><span class="comment">
-</span><span class="comment-delimiter">;; </span><span class="comment">Methods are called either with (htmlize-method METHOD ARGS...) 
+</span><span class="comment-delimiter">;; </span><span class="comment">Methods are called either with (htmlize-method METHOD ARGS...)
 </span><span class="comment-delimiter">;; </span><span class="comment">special form, or by accessing the function with
 </span><span class="comment-delimiter">;; </span><span class="comment">(htmlize-method-function 'METHOD) and calling (funcall FUNCTION).
 </span><span class="comment-delimiter">;; </span><span class="comment">The latter form is useful in tight loops because `</span><span class="comment"><span class="constant">htmlize-method</span></span><span class="comment">'
@@ -1520,9 +1416,10 @@ it's called with the same value of KEY.  All other times, the cached
   (<span class="keyword">let</span> ((value (gensym)))
     `(<span class="keyword">let</span> ((,value (gethash ,key htmlize-memoization-table)))
        (<span class="keyword">unless</span> ,value
-         (setq ,value ,generator)
-         (setf (gethash ,key htmlize-memoization-table) ,value))
+         (<span class="keyword">setq</span> ,value ,generator)
+         (<span class="keyword">setf</span> (gethash ,key htmlize-memoization-table) ,value))
        ,value)))
+
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">Default methods.
 </span>
@@ -1530,13 +1427,18 @@ it's called with the same value of KEY.  All other times, the cached
   nil                                   <span class="comment-delimiter">; </span><span class="comment">no doc-string
 </span>  <span class="comment-delimiter">;; </span><span class="comment">Note that the `</span><span class="comment"><span class="constant">font</span></span><span class="comment">' output is technically invalid under this DTD
 </span>  <span class="comment-delimiter">;; </span><span class="comment">because the DTD doesn't allow embedding &lt;font&gt; in &lt;pre&gt;.
-</span>  <span class="string">"&lt;!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"&gt;"</span>
-  )
+</span>  <span class="string">"&lt;!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\"&gt;"</span>)
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-default-body-tag</span> (face-map)
   nil                                   <span class="comment-delimiter">; </span><span class="comment">no doc-string
 </span>  face-map <span class="comment-delimiter">; </span><span class="comment">shut up the byte-compiler
 </span>  <span class="string">"&lt;body&gt;"</span>)
+
+(<span class="keyword">defun</span> <span class="function-name">htmlize-default-pre-tag</span> (face-map)
+  nil                                   <span class="comment-delimiter">; </span><span class="comment">no doc-string
+</span>  face-map <span class="comment-delimiter">; </span><span class="comment">shut up the byte-compiler
+</span>  <span class="string">"&lt;pre&gt;"</span>)
+
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">CSS based output support.
 </span>
@@ -1544,28 +1446,28 @@ it's called with the same value of KEY.  All other times, the cached
 </span>(<span class="keyword">defun</span> <span class="function-name">htmlize-css-specs</span> (fstruct)
   (<span class="keyword">let</span> (result)
     (<span class="keyword">when</span> (htmlize-fstruct-foreground fstruct)
-      (push (format <span class="string">"color: %s;"</span> (htmlize-fstruct-foreground fstruct))
+      (<span class="keyword">push</span> (format <span class="string">"color: %s;"</span> (htmlize-fstruct-foreground fstruct))
             result))
     (<span class="keyword">when</span> (htmlize-fstruct-background fstruct)
-      (push (format <span class="string">"background-color: %s;"</span>
+      (<span class="keyword">push</span> (format <span class="string">"background-color: %s;"</span>
                     (htmlize-fstruct-background fstruct))
             result))
     (<span class="keyword">let</span> ((size (htmlize-fstruct-size fstruct)))
-      (<span class="keyword">when</span> (and size (not (eq htmlize-ignore-face-size t)))
+      (<span class="keyword">when</span> (<span class="keyword">and</span> size (not (eq htmlize-ignore-face-size t)))
         (<span class="keyword">cond</span> ((floatp size)
-               (push (format <span class="string">"font-size: %d%%;"</span> (* 100 size)) result))
+               (<span class="keyword">push</span> (format <span class="string">"font-size: %d%%;"</span> (* 100 size)) result))
               ((not (eq htmlize-ignore-face-size 'absolute))
-               (push (format <span class="string">"font-size: %spt;"</span> (/ size 10.0)) result)))))
+               (<span class="keyword">push</span> (format <span class="string">"font-size: %spt;"</span> (/ size 10.0)) result)))))
     (<span class="keyword">when</span> (htmlize-fstruct-boldp fstruct)
-      (push <span class="string">"font-weight: bold;"</span> result))
+      (<span class="keyword">push</span> <span class="string">"font-weight: bold;"</span> result))
     (<span class="keyword">when</span> (htmlize-fstruct-italicp fstruct)
-      (push <span class="string">"font-style: italic;"</span> result))
+      (<span class="keyword">push</span> <span class="string">"font-style: italic;"</span> result))
     (<span class="keyword">when</span> (htmlize-fstruct-underlinep fstruct)
-      (push <span class="string">"text-decoration: underline;"</span> result))
+      (<span class="keyword">push</span> <span class="string">"text-decoration: underline;"</span> result))
     (<span class="keyword">when</span> (htmlize-fstruct-overlinep fstruct)
-      (push <span class="string">"text-decoration: overline;"</span> result))
+      (<span class="keyword">push</span> <span class="string">"text-decoration: overline;"</span> result))
     (<span class="keyword">when</span> (htmlize-fstruct-strikep fstruct)
-      (push <span class="string">"text-decoration: line-through;"</span> result))
+      (<span class="keyword">push</span> <span class="string">"text-decoration: line-through;"</span> result))
     (nreverse result)))
 
 (<span class="keyword">defun</span> <span class="function-name">htmlize-css-insert-head</span> (buffer-faces face-map)
@@ -1575,9 +1477,10 @@ it's called with the same value of KEY.  All other times, the cached
                      (htmlize-css-specs (gethash 'default face-map))
                      <span class="string">"\n        "</span>)
           <span class="string">"\n      }\n"</span>)
-  (<span class="keyword">dolist</span> (face (sort* (copy-list buffer-faces) #'string-lessp
-                       <span class="builtin">:key</span> (<span class="keyword">lambda</span> (f)
-                              (htmlize-fstruct-css-name (gethash f face-map)))))
+  (<span class="keyword">dolist</span> (face (cl-sort (cl-copy-list buffer-faces) #'string-lessp
+                         <span class="builtin">:key</span> (<span class="keyword">lambda</span> (f)
+                                (htmlize-fstruct-css-name
+                                 (gethash f face-map)))))
     (<span class="keyword">let*</span> ((fstruct (gethash face face-map))
            (cleaned-up-face-name
             (<span class="keyword">let</span> ((s
@@ -1587,9 +1490,9 @@ it's called with the same value of KEY.  All other times, the cached
 </span>                   (prin1-to-string face)))
               <span class="comment-delimiter">;; </span><span class="comment">If the name contains `</span><span class="comment"><span class="constant">--</span></span><span class="comment">' or `</span><span class="comment"><span class="constant">*/</span></span><span class="comment">', remove them.
 </span>              (<span class="keyword">while</span> (string-match <span class="string">"--"</span> s)
-                (setq s (replace-match <span class="string">"-"</span> t t s)))
+                (<span class="keyword">setq</span> s (replace-match <span class="string">"-"</span> t t s)))
               (<span class="keyword">while</span> (string-match <span class="string">"\\*/"</span> s)
-                (setq s (replace-match <span class="string">"XX"</span> t t s)))
+                (<span class="keyword">setq</span> s (replace-match <span class="string">"XX"</span> t t s)))
               s))
            (specs (htmlize-css-specs fstruct)))
       (insert <span class="string">"      ."</span> (htmlize-fstruct-css-name fstruct))
@@ -1611,34 +1514,43 @@ it's called with the same value of KEY.  All other times, the cached
     (princ <span class="string">"&lt;span class=\""</span> buffer)
     (princ (htmlize-fstruct-css-name fstruct) buffer)
     (princ <span class="string">"\"&gt;"</span> buffer))
-  (htmlize-lexlet ((fstruct-list fstruct-list) (buffer buffer))
-    (<span class="keyword">lambda</span> ()
-      (<span class="keyword">dolist</span> (fstruct fstruct-list)
-        (ignore fstruct)                <span class="comment-delimiter">; </span><span class="comment">shut up the byte-compiler
-</span>        (princ <span class="string">"&lt;/span&gt;"</span> buffer)))))
+  (<span class="keyword">lambda</span> ()
+    (<span class="keyword">dolist</span> (_fstruct fstruct-list)
+      (princ <span class="string">"&lt;/span&gt;"</span> buffer))))
+
 <hr />
-<span class="comment-delimiter">;; </span><span class="comment">`</span><span class="comment"><span class="constant">inline-css</span></span><span class="comment">' output support.
+<span class="comment-delimiter">;;; </span><span class="comment">`</span><span class="comment"><span class="constant">inline-css</span></span><span class="comment">' output support.
 </span>
 (<span class="keyword">defun</span> <span class="function-name">htmlize-inline-css-body-tag</span> (face-map)
   (format <span class="string">"&lt;body style=\"%s\"&gt;"</span>
           (mapconcat #'identity (htmlize-css-specs (gethash 'default face-map))
                      <span class="string">" "</span>)))
 
+(<span class="keyword">defun</span> <span class="function-name">htmlize-inline-css-pre-tag</span> (face-map)
+  (<span class="keyword">if</span> htmlize-pre-style
+      (format <span class="string">"&lt;pre style=\"%s\"&gt;"</span>
+              (mapconcat #'identity
+                         (htmlize-css-specs (gethash 'default face-map))
+                         <span class="string">" "</span>))
+    (format <span class="string">"&lt;pre&gt;"</span>)))
+
 (<span class="keyword">defun</span> <span class="function-name">htmlize-inline-css-text-markup</span> (fstruct-list buffer)
   (<span class="keyword">let*</span> ((merged (htmlize-merge-faces fstruct-list))
-         (style (htmlize-memoize
+         (style (<span class="keyword">htmlize-memoize</span>
                  merged
                  (<span class="keyword">let</span> ((specs (htmlize-css-specs merged)))
-                   (and specs
-                        (mapconcat #'identity (htmlize-css-specs merged) <span class="string">" "</span>))))))
+                   (<span class="keyword">and</span> specs
+                        (mapconcat #'identity
+                                   (htmlize-css-specs merged)
+                                   <span class="string">" "</span>))))))
     (<span class="keyword">when</span> style
       (princ <span class="string">"&lt;span style=\""</span> buffer)
       (princ style buffer)
       (princ <span class="string">"\"&gt;"</span> buffer))
-    (htmlize-lexlet ((style style) (buffer buffer))
-      (<span class="keyword">lambda</span> ()
-        (<span class="keyword">when</span> style
-          (princ <span class="string">"&lt;/span&gt;"</span> buffer))))))
+    (<span class="keyword">lambda</span> ()
+      (<span class="keyword">when</span> style
+        (princ <span class="string">"&lt;/span&gt;"</span> buffer)))))
+
 <hr />
 <span class="comment-delimiter">;;; </span><span class="comment">`</span><span class="comment"><span class="constant">font</span></span><span class="comment">' tag based output support.
 </span>
@@ -1647,32 +1559,43 @@ it's called with the same value of KEY.  All other times, the cached
     (format <span class="string">"&lt;body text=\"%s\" bgcolor=\"%s\"&gt;"</span>
             (htmlize-fstruct-foreground fstruct)
             (htmlize-fstruct-background fstruct))))
-       
+
+(<span class="keyword">defun</span> <span class="function-name">htmlize-font-pre-tag</span> (face-map)
+  (<span class="keyword">if</span> htmlize-pre-style
+      (<span class="keyword">let</span> ((fstruct (gethash 'default face-map)))
+        (format <span class="string">"&lt;pre text=\"%s\" bgcolor=\"%s\"&gt;"</span>
+                (htmlize-fstruct-foreground fstruct)
+                (htmlize-fstruct-background fstruct)))
+    (format <span class="string">"&lt;pre&gt;"</span>)))
+
 (<span class="keyword">defun</span> <span class="function-name">htmlize-font-text-markup</span> (fstruct-list buffer)
   <span class="comment-delimiter">;; </span><span class="comment">In `</span><span class="comment"><span class="constant">font</span></span><span class="comment">' mode, we use the traditional HTML means of altering
 </span>  <span class="comment-delimiter">;; </span><span class="comment">presentation: &lt;font&gt; tag for colors, &lt;b&gt; for bold, &lt;u&gt; for
 </span>  <span class="comment-delimiter">;; </span><span class="comment">underline, and &lt;strike&gt; for strike-through.
 </span>  (<span class="keyword">let*</span> ((merged (htmlize-merge-faces fstruct-list))
-         (markup (htmlize-memoize
+         (markup (<span class="keyword">htmlize-memoize</span>
                   merged
                   (cons (concat
-                         (and (htmlize-fstruct-foreground merged)
-                              (format <span class="string">"&lt;font color=\"%s\"&gt;"</span> (htmlize-fstruct-foreground merged)))
-                         (and (htmlize-fstruct-boldp merged)      <span class="string">"&lt;b&gt;"</span>)
-                         (and (htmlize-fstruct-italicp merged)    <span class="string">"&lt;i&gt;"</span>)
-                         (and (htmlize-fstruct-underlinep merged) <span class="string">"&lt;u&gt;"</span>)
-                         (and (htmlize-fstruct-strikep merged)    <span class="string">"&lt;strike&gt;"</span>))
+                         (<span class="keyword">and</span> (htmlize-fstruct-foreground merged)
+                              (format <span class="string">"&lt;font color=\"%s\"&gt;"</span>
+                                      (htmlize-fstruct-foreground merged)))
+                         (<span class="keyword">and</span> (htmlize-fstruct-boldp merged)      <span class="string">"&lt;b&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-italicp merged)    <span class="string">"&lt;i&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-underlinep merged) <span class="string">"&lt;u&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-strikep merged)    <span class="string">"&lt;strike&gt;"</span>))
                         (concat
-                         (and (htmlize-fstruct-strikep merged)    <span class="string">"&lt;/strike&gt;"</span>)
-                         (and (htmlize-fstruct-underlinep merged) <span class="string">"&lt;/u&gt;"</span>)
-                         (and (htmlize-fstruct-italicp merged)    <span class="string">"&lt;/i&gt;"</span>)
-                         (and (htmlize-fstruct-boldp merged)      <span class="string">"&lt;/b&gt;"</span>)
-                         (and (htmlize-fstruct-foreground merged) <span class="string">"&lt;/font&gt;"</span>))))))
+                         (<span class="keyword">and</span> (htmlize-fstruct-strikep merged)    <span class="string">"&lt;/strike&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-underlinep merged) <span class="string">"&lt;/u&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-italicp merged)    <span class="string">"&lt;/i&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-boldp merged)      <span class="string">"&lt;/b&gt;"</span>)
+                         (<span class="keyword">and</span> (htmlize-fstruct-foreground merged) <span class="string">"&lt;/font&gt;"</span>))))))
     (princ (car markup) buffer)
-    (htmlize-lexlet ((markup markup) (buffer buffer))
-      (<span class="keyword">lambda</span> ()
-        (princ (cdr markup) buffer)))))
+    (<span class="keyword">lambda</span> ()
+      (princ (cdr markup) buffer))))
+
 <hr />
+<span class="comment-delimiter">;;; </span><span class="comment">Utility functions.
+</span>
 (<span class="keyword">defun</span> <span class="function-name">htmlize-buffer-1</span> ()
   <span class="comment-delimiter">;; </span><span class="comment">Internal function; don't call it from outside this file.  Htmlize
 </span>  <span class="comment-delimiter">;; </span><span class="comment">current buffer, writing the resulting HTML to a new buffer, and
@@ -1697,7 +1620,8 @@ it's called with the same value of KEY.  All other times, the cached
           (completed nil))
       (<span class="keyword">unwind-protect</span>
           (<span class="keyword">let*</span> ((buffer-faces (htmlize-faces-in-buffer))
-                 (face-map (htmlize-make-face-map (adjoin 'default buffer-faces)))
+                 (face-map (htmlize-make-face-map
+                            (cl-adjoin 'default buffer-faces)))
                  (places (gensym))
                  (title (<span class="keyword">if</span> (buffer-file-name)
                             (file-name-nondirectory (buffer-file-name))
@@ -1710,7 +1634,7 @@ it's called with the same value of KEY.  All other times, the cached
             <span class="comment-delimiter">;; </span><span class="comment">Initialize HTMLBUF and insert the HTML prolog.
 </span>            (<span class="keyword">with-current-buffer</span> htmlbuf
               (buffer-disable-undo)
-              (insert (htmlize-method doctype) ?\n
+              (insert (<span class="keyword">htmlize-method</span> doctype) ?\n
                       (format <span class="string">"&lt;!-- Created by htmlize-%s in %s mode. --&gt;\n"</span>
                               htmlize-version htmlize-output-type)
                       <span class="string">"&lt;html&gt;\n  "</span>)
@@ -1718,20 +1642,21 @@ it's called with the same value of KEY.  All other times, the cached
               (insert <span class="string">"&lt;head&gt;\n"</span>
                       <span class="string">"    &lt;title&gt;"</span> (htmlize-protect-string title) <span class="string">"&lt;/title&gt;\n"</span>
                       (<span class="keyword">if</span> htmlize-html-charset
-                          (format (concat <span class="string">"    &lt;meta http-equiv=\"Content-Type\" "</span>
-                                          <span class="string">"content=\"text/html; charset=%s\"&gt;\n"</span>)
-                                  htmlize-html-charset)
+                          (format
+                           (concat <span class="string">"    &lt;meta http-equiv=\"Content-Type\" "</span>
+                                   <span class="string">"content=\"text/html; charset=%s\"&gt;\n"</span>)
+                           htmlize-html-charset)
                         <span class="string">""</span>)
                       htmlize-head-tags)
-              (htmlize-method insert-head buffer-faces face-map)
+              (<span class="keyword">htmlize-method</span> insert-head buffer-faces face-map)
               (insert <span class="string">"  &lt;/head&gt;"</span>)
               (put places 'head-end (point-marker))
               (insert <span class="string">"\n  "</span>)
               (put places 'body-start (point-marker))
-              (insert (htmlize-method body-tag face-map)
+              (insert (<span class="keyword">htmlize-method</span> body-tag face-map)
                       <span class="string">"\n    "</span>)
               (put places 'content-start (point-marker))
-              (insert <span class="string">"&lt;pre&gt;\n"</span>))
+              (insert (<span class="keyword">htmlize-method</span> pre-tag face-map) <span class="string">"\n"</span>))
             (<span class="keyword">let</span> ((text-markup
                    <span class="comment-delimiter">;; </span><span class="comment">Get the inserter method, so we can funcall it inside
 </span>                   <span class="comment-delimiter">;; </span><span class="comment">the loop.  Not calling `</span><span class="comment"><span class="constant">htmlize-method</span></span><span class="comment">' in the loop
@@ -1752,23 +1677,24 @@ it's called with the same value of KEY.  All other times, the cached
 </span>              <span class="comment-delimiter">;; </span><span class="comment">they rebind all buffer-local vars.
 </span>              (goto-char (point-min))
               (<span class="keyword">while</span> (not (eobp))
-                (setq next-change (htmlize-next-face-change (point)))
+                (<span class="keyword">setq</span> next-change (htmlize-next-face-change (point)))
                 <span class="comment-delimiter">;; </span><span class="comment">Get faces in use between (point) and NEXT-CHANGE, and
 </span>                <span class="comment-delimiter">;; </span><span class="comment">convert them to fstructs.
-</span>                (setq face-list (htmlize-faces-at-point)
+</span>                (<span class="keyword">setq</span> face-list (htmlize-faces-at-point)
                       fstruct-list (delq nil (mapcar (<span class="keyword">lambda</span> (f)
                                                        (gethash f face-map))
                                                      face-list)))
-                (multiple-value-setq (text trailing-ellipsis)
+                (<span class="keyword">cl-multiple-value-setq</span> (text trailing-ellipsis)
                   (htmlize-extract-text (point) next-change trailing-ellipsis))
                 <span class="comment-delimiter">;; </span><span class="comment">Don't bother writing anything if there's no text (this
 </span>                <span class="comment-delimiter">;; </span><span class="comment">happens in invisible regions).
 </span>                (<span class="keyword">when</span> (&gt; (length text) 0)
                   <span class="comment-delimiter">;; </span><span class="comment">Open the new markup if necessary and insert the text.
-</span>                  (<span class="keyword">when</span> (not (equalp fstruct-list last-fstruct-list))
+</span>                  (<span class="keyword">when</span> (not (cl-equalp fstruct-list last-fstruct-list))
                     (funcall close-markup)
-                    (setq last-fstruct-list fstruct-list
-                          close-markup (funcall text-markup fstruct-list htmlbuf)))
+                    (<span class="keyword">setq</span> last-fstruct-list fstruct-list)
+                    (<span class="keyword">setq</span> close-markup
+                          (funcall text-markup fstruct-list htmlbuf)))
                   (princ text htmlbuf))
                 (goto-char next-change))
 
@@ -1793,15 +1719,13 @@ it's called with the same value of KEY.  All other times, the cached
                    (symbol-plist places))
               (run-hooks 'htmlize-after-hook)
               (buffer-enable-undo))
-            (setq completed t)
+            (<span class="keyword">setq</span> completed t)
             htmlbuf)
 
         (<span class="keyword">when</span> (not completed)
           (kill-buffer htmlbuf))
         (htmlize-delete-tmp-overlays)))))
 
-<span class="comment-delimiter">;; </span><span class="comment">Utility functions.
-</span>
 (<span class="keyword">defmacro</span> <span class="function-name">htmlize-with-fontify-message</span> (<span class="type">&amp;rest</span> body)
   <span class="comment-delimiter">;; </span><span class="comment">When forcing fontification of large buffers in
 </span>  <span class="comment-delimiter">;; </span><span class="comment">htmlize-ensure-fontified, inform the user that he is waiting for
@@ -1820,63 +1744,55 @@ it's called with the same value of KEY.  All other times, the cached
 </span>  <span class="comment-delimiter">;; </span><span class="comment">actually fontify the buffer.  If font-lock is not in use, we
 </span>  <span class="comment-delimiter">;; </span><span class="comment">don't care because, except in htmlize-file, we don't force
 </span>  <span class="comment-delimiter">;; </span><span class="comment">font-lock on the user.
-</span>  (<span class="keyword">when</span> (and (boundp 'font-lock-mode)
-             font-lock-mode)
+</span>  (<span class="keyword">when</span> font-lock-mode
     <span class="comment-delimiter">;; </span><span class="comment">In part taken from ps-print-ensure-fontified in GNU Emacs 21.
-</span>    (<span class="keyword">cond</span>
-     ((and (boundp 'jit-lock-mode)
-           (symbol-value 'jit-lock-mode))
-      (htmlize-with-fontify-message
+</span>    (<span class="keyword">when</span> (<span class="keyword">and</span> (boundp 'jit-lock-mode)
+               (symbol-value 'jit-lock-mode))
+      (<span class="keyword">htmlize-with-fontify-message</span>
        (jit-lock-fontify-now (point-min) (point-max))))
-     ((and (boundp 'lazy-lock-mode)
-           (symbol-value 'lazy-lock-mode))
-      (htmlize-with-fontify-message
-       (lazy-lock-fontify-region (point-min) (point-max))))
-     ((and (boundp 'lazy-shot-mode)
-           (symbol-value 'lazy-shot-mode))
-      (htmlize-with-fontify-message
-       <span class="comment-delimiter">;; </span><span class="comment">lazy-shot is amazing in that it must *refontify* the region,
-</span>       <span class="comment-delimiter">;; </span><span class="comment">even if the whole buffer has already been fontified.  &lt;sigh&gt;
-</span>       (lazy-shot-fontify-region (point-min) (point-max))))
-     <span class="comment-delimiter">;; </span><span class="comment">There's also fast-lock, but we don't need to handle specially,
-</span>     <span class="comment-delimiter">;; </span><span class="comment">I think.  fast-lock doesn't really defer fontification, it
-</span>     <span class="comment-delimiter">;; </span><span class="comment">just saves it to an external cache so it's not done twice.
-</span>     )))
+
+    (<span class="keyword">if</span> (fboundp 'font-lock-ensure)
+        (font-lock-ensure)
+      <span class="comment-delimiter">;; </span><span class="comment">Emacs prior to 25.1
+</span>      (with-no-warnings
+        (font-lock-mode 1)
+        (font-lock-fontify-buffer)))))
 
 <hr />
 <span class="comment-delimiter">;;;</span><span class="comment">###</span><span class="comment"><span class="warning">autoload</span></span><span class="comment">
-</span>(<span class="keyword">defun</span> <span class="function-name">htmlize-buffer</span> (<span class="type">&amp;optional</span> buffer)
+</span>(<span class="keyword">defun</span> <span class="function-name">htmlize-buffer</span> (<span class="type">&amp;optional</span> buffer interactive)
   <span class="doc">"Convert BUFFER to HTML, preserving colors and decorations.
 
 The generated HTML is available in a new buffer, which is returned.
-When invoked interactively, the new buffer is selected in the current
-window.  The title of the generated document will be set to the buffer's
-file name or, if that's not available, to the buffer's name.
+When invoked interactively (or if optional INTERACTIVE is non-nil),
+the new buffer is selected in the current window.  The title of the
+generated document will be set to the buffer's file name or, if that
+is not available, to the buffer's name.
 
 Note that htmlize doesn't fontify your buffers, it only uses the
 decorations that are already present.  If you don't set up font-lock or
 something else to fontify your buffers, the resulting HTML will be
 plain.  Likewise, if you don't like the choice of colors, fix the mode
 that created them, or simply alter the faces it uses."</span>
-  (interactive)
-  (<span class="keyword">let</span> ((htmlbuf (<span class="keyword">with-current-buffer</span> (or buffer (current-buffer))
+  (<span class="keyword">interactive</span> <span class="string">"i\np"</span>)
+  (<span class="keyword">let</span> ((htmlbuf (<span class="keyword">with-current-buffer</span> (<span class="keyword">or</span> buffer (current-buffer))
                    (htmlize-buffer-1))))
-    (<span class="keyword">when</span> (interactive-p)
+    (<span class="keyword">when</span> interactive
       (switch-to-buffer htmlbuf))
     htmlbuf))
 
 <span class="comment-delimiter">;;;</span><span class="comment">###</span><span class="comment"><span class="warning">autoload</span></span><span class="comment">
-</span>(<span class="keyword">defun</span> <span class="function-name">htmlize-region</span> (beg end)
+</span>(<span class="keyword">defun</span> <span class="function-name">htmlize-region</span> (beg end <span class="type">&amp;optional</span> interactive)
   <span class="doc">"Convert the region to HTML, preserving colors and decorations.
 See `</span><span class="doc"><span class="constant">htmlize-buffer</span></span><span class="doc">' for details."</span>
-  (interactive <span class="string">"r"</span>)
+  (<span class="keyword">interactive</span> <span class="string">"r\np"</span>)
   <span class="comment-delimiter">;; </span><span class="comment">Don't let zmacs region highlighting end up in HTML.
 </span>  (<span class="keyword">when</span> (fboundp 'zmacs-deactivate-region)
     (zmacs-deactivate-region))
   (<span class="keyword">let</span> ((htmlbuf (<span class="keyword">save-restriction</span>
                    (narrow-to-region beg end)
                    (htmlize-buffer-1))))
-    (<span class="keyword">when</span> (interactive-p)
+    (<span class="keyword">when</span> interactive
       (switch-to-buffer htmlbuf))
     htmlbuf))
 
@@ -1893,6 +1809,16 @@ the text to another HTML buffer."</span>
                             (plist-get htmlize-buffer-places 'content-end)))
       (kill-buffer htmlbuf))))
 
+(<span class="keyword">defun</span> <span class="function-name">htmlize-region-save-screenshot</span> (beg end)
+  <span class="doc">"Save the htmlized (see `</span><span class="doc"><span class="constant">htmlize-region-for-paste</span></span><span class="doc">') region in
+the kill ring. Uses `</span><span class="doc"><span class="constant">inline-css</span></span><span class="doc">', with style information in
+`</span><span class="doc"><span class="constant">&lt;pre&gt;</span></span><span class="doc">' tags, so that the rendering of the marked up text
+approximates the buffer as closely as possible."</span>
+  (<span class="keyword">interactive</span> <span class="string">"r"</span>)
+  (<span class="keyword">let</span> ((htmlize-pre-style t))
+    (kill-new (htmlize-region-for-paste beg end)))
+  (deactivate-mark))
+
 (<span class="keyword">defun</span> <span class="function-name">htmlize-make-file-name</span> (file)
   <span class="doc">"Make an HTML file name from FILE.
 
@@ -1907,14 +1833,14 @@ overload this function to do it and htmlize will comply."</span>
 
 <span class="comment-delimiter">;; </span><span class="comment">Older implementation of htmlize-make-file-name that changes FILE's
 </span><span class="comment-delimiter">;; </span><span class="comment">extension to ".html".
-</span><span class="comment-delimiter">;</span><span class="comment">(defun htmlize-make-file-name (file)
-</span><span class="comment-delimiter">;  </span><span class="comment">(let ((extension (file-name-extension file))
-</span><span class="comment-delimiter">;</span><span class="comment">       (sans-extension (file-name-sans-extension file)))
-</span><span class="comment-delimiter">;    </span><span class="comment">(if (or (equal extension "html")
-</span><span class="comment-delimiter">;</span><span class="comment">           (equal extension "htm")
-</span><span class="comment-delimiter">;</span><span class="comment">           (equal sans-extension ""))
-</span><span class="comment-delimiter">;</span><span class="comment">       (concat file ".html")
-</span><span class="comment-delimiter">;      </span><span class="comment">(concat sans-extension ".html"))))
+</span><span class="comment-delimiter">;; </span><span class="comment">(defun htmlize-make-file-name (file)
+</span><span class="comment-delimiter">;;  </span><span class="comment">(let ((extension (file-name-extension file))
+</span><span class="comment-delimiter">;;      </span><span class="comment">(sans-extension (file-name-sans-extension file)))
+</span><span class="comment-delimiter">;;    </span><span class="comment">(if (or (equal extension "html")
+</span><span class="comment-delimiter">;;          </span><span class="comment">(equal extension "htm")
+</span><span class="comment-delimiter">;;          </span><span class="comment">(equal sans-extension ""))
+</span><span class="comment-delimiter">;;      </span><span class="comment">(concat file ".html")
+</span><span class="comment-delimiter">;;      </span><span class="comment">(concat sans-extension ".html"))))
 </span>
 <span class="comment-delimiter">;;;</span><span class="comment">###</span><span class="comment"><span class="warning">autoload</span></span><span class="comment">
 </span>(<span class="keyword">defun</span> <span class="function-name">htmlize-file</span> (file <span class="type">&amp;optional</span> target)
@@ -1933,27 +1859,21 @@ function does not change current buffer or move the point.
 If TARGET is specified and names a directory, the resulting file will be
 saved there instead of to FILE's directory.  If TARGET is specified and
 does not name a directory, it will be used as output file name."</span>
-  (interactive (list (read-file-name
+  (<span class="keyword">interactive</span> (list (read-file-name
                       <span class="string">"HTML-ize file: "</span>
-                      nil nil nil (and (buffer-file-name)
+                      nil nil nil (<span class="keyword">and</span> (buffer-file-name)
                                        (file-name-nondirectory
                                         (buffer-file-name))))))
-  (<span class="keyword">let</span> ((output-file (<span class="keyword">if</span> (and target (not (file-directory-p target)))
+  (<span class="keyword">let</span> ((output-file (<span class="keyword">if</span> (<span class="keyword">and</span> target (not (file-directory-p target)))
                          target
                        (expand-file-name
                         (htmlize-make-file-name (file-name-nondirectory file))
-                        (or target (file-name-directory file)))))
+                        (<span class="keyword">or</span> target (file-name-directory file)))))
         <span class="comment-delimiter">;; </span><span class="comment">Try to prevent `</span><span class="comment"><span class="constant">find-file-noselect</span></span><span class="comment">' from triggering
 </span>        <span class="comment-delimiter">;; </span><span class="comment">font-lock because we'll fontify explicitly below.
 </span>        (font-lock-mode nil)
         (font-lock-auto-fontify nil)
-        (global-font-lock-mode nil)
-        <span class="comment-delimiter">;; </span><span class="comment">Ignore the size limit for the purposes of htmlization.
-</span>        (font-lock-maximum-size nil)
-        <span class="comment-delimiter">;; </span><span class="comment">Disable font-lock support modes.  This will only work in
-</span>        <span class="comment-delimiter">;; </span><span class="comment">more recent Emacs versions, so htmlize-buffer-1 still needs
-</span>        <span class="comment-delimiter">;; </span><span class="comment">to call htmlize-ensure-fontified.
-</span>        (font-lock-support-mode nil))
+        (global-font-lock-mode nil))
     (<span class="keyword">with-temp-buffer</span>
       <span class="comment-delimiter">;; </span><span class="comment">Insert FILE into the temporary buffer.
 </span>      (insert-file-contents file)
@@ -1963,11 +1883,6 @@ does not name a directory, it will be used as output file name."</span>
 </span>      (<span class="keyword">let</span> ((buffer-file-name file))
         <span class="comment-delimiter">;; </span><span class="comment">Set the major mode for the sake of font-lock.
 </span>        (normal-mode)
-        (font-lock-mode 1)
-        (<span class="keyword">unless</span> font-lock-mode
-          <span class="comment-delimiter">;; </span><span class="comment">In GNU Emacs (font-lock-mode 1) doesn't force font-lock,
-</span>          <span class="comment-delimiter">;; </span><span class="comment">contrary to the documentation.  This seems to work.
-</span>          (font-lock-fontify-buffer))
         <span class="comment-delimiter">;; </span><span class="comment">htmlize the buffer and save the HTML.
 </span>        (<span class="keyword">with-current-buffer</span> (htmlize-buffer-1)
           (<span class="keyword">unwind-protect</span>
@@ -1991,42 +1906,43 @@ terminated with RET.
 If TARGET-DIRECTORY is specified, the HTML files will be saved to that
 directory.  Normally, each HTML file is saved to the directory of the
 corresponding source file."</span>
-  (interactive
+  (<span class="keyword">interactive</span>
    (list
     (<span class="keyword">let</span> (list file)
       <span class="comment-delimiter">;; </span><span class="comment">Use empty string as DEFAULT because setting DEFAULT to nil
 </span>      <span class="comment-delimiter">;; </span><span class="comment">defaults to the directory name, which is not what we want.
-</span>      (<span class="keyword">while</span> (not (equal (setq file (read-file-name
+</span>      (<span class="keyword">while</span> (not (equal (<span class="keyword">setq</span> file (read-file-name
                                      <span class="string">"HTML-ize file (RET to finish): "</span>
-                                     (and list (file-name-directory
+                                     (<span class="keyword">and</span> list (file-name-directory
                                                 (car list)))
                                      <span class="string">""</span> t))
                          <span class="string">""</span>))
-        (push file list))
+        (<span class="keyword">push</span> file list))
       (nreverse list))))
   <span class="comment-delimiter">;; </span><span class="comment">Verify that TARGET-DIRECTORY is indeed a directory.  If it's a
 </span>  <span class="comment-delimiter">;; </span><span class="comment">file, htmlize-file will use it as target, and that doesn't make
 </span>  <span class="comment-delimiter">;; </span><span class="comment">sense.
-</span>  (and target-directory
+</span>  (<span class="keyword">and</span> target-directory
        (not (file-directory-p target-directory))
        (<span class="warning">error</span> <span class="string">"target-directory must name a directory: %s"</span> target-directory))
   (<span class="keyword">dolist</span> (file files)
     (htmlize-file file target-directory)))
 
+(<span class="keyword">declare-function</span> dired-get-marked-files <span class="string">"dired"</span>
+                  (<span class="type">&amp;optional</span> localp arg filter distinguish-one-marked error))
+
 <span class="comment-delimiter">;;;</span><span class="comment">###</span><span class="comment"><span class="warning">autoload</span></span><span class="comment">
 </span>(<span class="keyword">defun</span> <span class="function-name">htmlize-many-files-dired</span> (arg <span class="type">&amp;optional</span> target-directory)
   <span class="doc">"HTMLize dired-marked files."</span>
-  (interactive <span class="string">"P"</span>)
+  (<span class="keyword">interactive</span> <span class="string">"P"</span>)
   (htmlize-many-files (dired-get-marked-files nil arg) target-directory))
 
 (<span class="keyword">provide</span> '<span class="constant">htmlize</span>)
 
 <span class="comment-delimiter">;; </span><span class="comment">Local Variables&#58;
-</span><span class="comment-delimiter">;; </span><span class="comment">byte-compile-warnings: (not cl-functions lexical unresolved obsolete)
-</span><span class="comment-delimiter">;; </span><span class="comment">lexical-binding: t
+</span><span class="comment-delimiter">;; </span><span class="comment">indent-tabs-mode: nil
 </span><span class="comment-delimiter">;; </span><span class="comment">End:
-</span>
-<span class="comment-delimiter">;;; </span><span class="comment">htmlize.el ends here
+</span><span class="comment-delimiter">;;; </span><span class="comment">htmlize.el ends here
 </span></pre>
   </body>
 </html>
