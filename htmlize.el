@@ -331,8 +331,7 @@ output.")
 (defvar htmlize-buffer-places)
 
 (defconst htmlize-image-mime-type-alist
-  '((svg . "svg+xml")
-    )
+  '((svg . "svg+xml"))
   "Alist mapping Emacs image types to Mime media types.
 https://www.iana.org/assignments/media-types/media-types.xhtml#image")
 
@@ -1351,8 +1350,7 @@ it's called with the same value of KEY.  All other times, the cached
   nil                                   ; no doc-string
   ;; Note that the `font' output is technically invalid under this DTD
   ;; because the DTD doesn't allow embedding <font> in <pre>.
-  "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\">"
-  )
+  "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\">")
 
 (defun htmlize-default-body-tag (face-map)
   nil                                   ; no doc-string
