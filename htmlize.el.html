@@ -155,10 +155,6 @@
 <span class="comment-delimiter">;;; </span><span class="comment">Code:
 </span>
 (<span class="keyword">require</span> '<span class="constant">cl-lib</span>)
-(<span class="keyword">eval-when-compile</span>
-  (<span class="keyword">defvar</span> <span class="variable-name">font-lock-auto-fontify</span>)
-  (<span class="keyword">defvar</span> <span class="variable-name">font-lock-support-mode</span>)
-  (<span class="keyword">defvar</span> <span class="variable-name">global-font-lock-mode</span>))
 
 (<span class="keyword">defconst</span> <span class="variable-name">htmlize-version</span> <span class="string">"1.58"</span>)
 
@@ -1607,7 +1603,10 @@ it's called with the same value of KEY.  All other times, the cached
       (run-hooks 'htmlize-before-hook))
     <span class="comment-delimiter">;; </span><span class="comment">Convince font-lock support modes to fontify the entire buffer
 </span>    <span class="comment-delimiter">;; </span><span class="comment">in advance.
-</span>    (htmlize-ensure-fontified)
+</span>    (message <span class="string">"Fontifing %s..."</span> buffer-file-name)
+    (font-lock-ensure)
+    (message <span class="string">"Fontifing %s...done"</span> buffer-file-name)
+    (message <span class="string">"Htmlizing %s..."</span> buffer-file-name)
     (clrhash htmlize-extended-character-cache)
     (clrhash htmlize-memoization-table)
     <span class="comment-delimiter">;; </span><span class="comment">It's important that the new buffer inherits default-directory
@@ -1722,41 +1721,11 @@ it's called with the same value of KEY.  All other times, the cached
             (<span class="keyword">setq</span> completed t)
             htmlbuf)
 
-        (<span class="keyword">when</span> (not completed)
-          (kill-buffer htmlbuf))
+        (<span class="keyword">if</span> completed
+            (message <span class="string">"Htmlizing %s...done"</span> buffer-file-name)
+          (kill-buffer htmlbuf)
+          (message <span class="string">"Htmlizing %s...failed"</span> buffer-file-name))
         (htmlize-delete-tmp-overlays)))))
-
-(<span class="keyword">defmacro</span> <span class="function-name">htmlize-with-fontify-message</span> (<span class="type">&amp;rest</span> body)
-  <span class="comment-delimiter">;; </span><span class="comment">When forcing fontification of large buffers in
-</span>  <span class="comment-delimiter">;; </span><span class="comment">htmlize-ensure-fontified, inform the user that he is waiting for
-</span>  <span class="comment-delimiter">;; </span><span class="comment">font-lock, not for htmlize to finish.
-</span>  `(<span class="keyword">progn</span>
-     (<span class="keyword">if</span> (&gt; (buffer-size) 65536)
-         (message <span class="string">"Forcing fontification of %s..."</span>
-                  (buffer-name (current-buffer))))
-     ,@body
-     (<span class="keyword">if</span> (&gt; (buffer-size) 65536)
-         (message <span class="string">"Forcing fontification of %s...done"</span>
-                  (buffer-name (current-buffer))))))
-
-(<span class="keyword">defun</span> <span class="function-name">htmlize-ensure-fontified</span> ()
-  <span class="comment-delimiter">;; </span><span class="comment">If font-lock is being used, ensure that the "support" modes
-</span>  <span class="comment-delimiter">;; </span><span class="comment">actually fontify the buffer.  If font-lock is not in use, we
-</span>  <span class="comment-delimiter">;; </span><span class="comment">don't care because, except in htmlize-file, we don't force
-</span>  <span class="comment-delimiter">;; </span><span class="comment">font-lock on the user.
-</span>  (<span class="keyword">when</span> font-lock-mode
-    <span class="comment-delimiter">;; </span><span class="comment">In part taken from ps-print-ensure-fontified in GNU Emacs 21.
-</span>    (<span class="keyword">when</span> (<span class="keyword">and</span> (boundp 'jit-lock-mode)
-               (symbol-value 'jit-lock-mode))
-      (<span class="keyword">htmlize-with-fontify-message</span>
-       (jit-lock-fontify-now (point-min) (point-max))))
-
-    (<span class="keyword">if</span> (fboundp 'font-lock-ensure)
-        (font-lock-ensure)
-      <span class="comment-delimiter">;; </span><span class="comment">Emacs prior to 25.1
-</span>      (with-no-warnings
-        (font-lock-mode 1)
-        (font-lock-fontify-buffer)))))
 
 <hr />
 <span class="comment-delimiter">;;;</span><span class="comment">###</span><span class="comment"><span class="warning">autoload</span></span><span class="comment">
@@ -1831,17 +1800,6 @@ extension to `</span><span class="doc"><span class="constant">.html</span></span
 overload this function to do it and htmlize will comply."</span>
   (concat file <span class="string">".html"</span>))
 
-<span class="comment-delimiter">;; </span><span class="comment">Older implementation of htmlize-make-file-name that changes FILE's
-</span><span class="comment-delimiter">;; </span><span class="comment">extension to ".html".
-</span><span class="comment-delimiter">;; </span><span class="comment">(defun htmlize-make-file-name (file)
-</span><span class="comment-delimiter">;;  </span><span class="comment">(let ((extension (file-name-extension file))
-</span><span class="comment-delimiter">;;      </span><span class="comment">(sans-extension (file-name-sans-extension file)))
-</span><span class="comment-delimiter">;;    </span><span class="comment">(if (or (equal extension "html")
-</span><span class="comment-delimiter">;;          </span><span class="comment">(equal extension "htm")
-</span><span class="comment-delimiter">;;          </span><span class="comment">(equal sans-extension ""))
-</span><span class="comment-delimiter">;;      </span><span class="comment">(concat file ".html")
-</span><span class="comment-delimiter">;;      </span><span class="comment">(concat sans-extension ".html"))))
-</span>
 <span class="comment-delimiter">;;;</span><span class="comment">###</span><span class="comment"><span class="warning">autoload</span></span><span class="comment">
 </span>(<span class="keyword">defun</span> <span class="function-name">htmlize-file</span> (file <span class="type">&amp;optional</span> target)
   <span class="doc">"Load FILE, fontify it, convert it to HTML, and save the result.
@@ -1868,12 +1826,7 @@ does not name a directory, it will be used as output file name."</span>
                          target
                        (expand-file-name
                         (htmlize-make-file-name (file-name-nondirectory file))
-                        (<span class="keyword">or</span> target (file-name-directory file)))))
-        <span class="comment-delimiter">;; </span><span class="comment">Try to prevent `</span><span class="comment"><span class="constant">find-file-noselect</span></span><span class="comment">' from triggering
-</span>        <span class="comment-delimiter">;; </span><span class="comment">font-lock because we'll fontify explicitly below.
-</span>        (font-lock-mode nil)
-        (font-lock-auto-fontify nil)
-        (global-font-lock-mode nil))
+                        (<span class="keyword">or</span> target (file-name-directory file))))))
     (<span class="keyword">with-temp-buffer</span>
       <span class="comment-delimiter">;; </span><span class="comment">Insert FILE into the temporary buffer.
 </span>      (insert-file-contents file)
