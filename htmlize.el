@@ -1750,17 +1750,6 @@ extension to `.html' (\"file.c\" -> \"file.html\").  If you want them,
 overload this function to do it and htmlize will comply."
   (concat file ".html"))
 
-;; Older implementation of htmlize-make-file-name that changes FILE's
-;; extension to ".html".
-;; (defun htmlize-make-file-name (file)
-;;  (let ((extension (file-name-extension file))
-;;      (sans-extension (file-name-sans-extension file)))
-;;    (if (or (equal extension "html")
-;;          (equal extension "htm")
-;;          (equal sans-extension ""))
-;;      (concat file ".html")
-;;      (concat sans-extension ".html"))))
-
 ;;;###autoload
 (defun htmlize-file (file &optional target)
   "Load FILE, fontify it, convert it to HTML, and save the result.
