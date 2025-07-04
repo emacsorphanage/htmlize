@@ -1,4 +1,4 @@
-;;; htmlize.el --- Convert buffer text and decorations to HTML. -*- lexical-binding: t -*-
+;;; htmlize.el --- Convert buffer text and decorations to HTML  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 1997-2003,2005,2006,2009,2011,2012,2014,2017,2018,2020 Hrvoje Niksic
 
