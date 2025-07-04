@@ -709,10 +709,10 @@ list."
 
 (defconst htmlize-tab-spaces
   ;; A table of strings with spaces.  (aref htmlize-tab-spaces 5) is
-  ;; like (make-string 5 ?\ ), except it doesn't cons.
+  ;; like (make-string 5 ?\s), except it doesn't cons.
   (let ((v (make-vector 32 nil)))
     (dotimes (i (length v))
-      (setf (aref v i) (make-string i ?\ )))
+      (setf (aref v i) (make-string i ?\s)))
     v))
 
 (defun htmlize-untabify-string (text start-column)
