@@ -949,7 +949,7 @@ If no rgb.txt file is found, return nil."
            ;; specifying any color.  Hence (htmlize-color-to-rgb nil)
            ;; returns nil.
            )
-          ((string-match "\\`#" color)
+          ((string-match "\\`#[0-9a-fA-F]\\{6\\}" color)
            ;; The color is already in #rrggbb format.
            (setq rgb-string color))
           ((and htmlize-use-rgb-txt
