@@ -350,8 +350,8 @@ https://www.iana.org/assignments/media-types/media-types.xhtml#image")
   ;; overlays that specify the `face' property, even when they
   ;; contain smaller text properties that also specify `face'.
   ;; Emacs display engine merges those faces, and so must we.
-  (or limit
-      (setq limit (point-max)))
+  (unless limit
+    (setq limit (point-max)))
   (let ((next-prop (next-single-property-change pos 'face nil limit))
         (overlay-faces (htmlize-overlay-faces-at pos)))
     (while (progn
