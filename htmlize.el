@@ -5,7 +5,7 @@
 ;; Author: Hrvoje Niksic <hniksic@gmail.com>
 ;; Homepage: https://github.com/emacsorphanage/htmlize
 ;; Keywords: hypermedia, extensions
-;; Version: 1.58
+;; Package-Version: 1.59
 ;; Package-Requires: ((emacs "26.1"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -75,7 +75,7 @@
 
 (require 'cl-lib)
 
-(defconst htmlize-version "1.58")
+(defconst htmlize-version "1.59")
 
 (defgroup htmlize nil
   "Convert buffer text and faces to HTML."
