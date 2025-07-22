@@ -1205,9 +1205,8 @@ If no rgb.txt file is found, return nil."
          (def (cond ((stringp raw-def) (list :foreground raw-def))
                     ((listp raw-def) raw-def)
                     (t
-                     (error (format (concat "face override must be an "
-                                            "attribute list or string, got %s")
-                                    raw-def))))))
+                     (error "Face override must be %s, got %s"
+                            "an attribute list or string" raw-def)))))
     (and def
          (htmlize-attrlist-to-fstruct def (symbol-name face)))))
 
@@ -1315,8 +1314,8 @@ overlays that specify `face'."
   (let ((sym (intern (format "htmlize-%s-%s" htmlize-output-type method))))
     (indirect-function (if (fboundp sym)
                            sym
-                         (let ((default (intern (concat "htmlize-default-"
-                                                        (symbol-name method)))))
+                         (let ((default (intern (format "htmlize-default-%s"
+                                                        method))))
                            (if (fboundp default)
                                default
                              'ignore))))))
