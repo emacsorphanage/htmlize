@@ -680,9 +680,9 @@ list."
              (push (htmlize-get-text-with-display pos next-change)
                    visible-list))
             ((and (eq show 'ellipsis)
-                  (not (eq last-show 'ellipsis))
-                  ;; Conflate successive ellipses.
-                  (push htmlize-ellipsis visible-list))))
+                  (not (eq last-show 'ellipsis)))
+             ;; Conflate successive ellipses.
+             (push htmlize-ellipsis visible-list)))
       (setq pos next-change last-show show))
     (htmlize-concat (nreverse visible-list))))
 
