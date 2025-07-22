@@ -981,7 +981,7 @@ If no rgb.txt file is found, return nil."
   foreground                            ; foreground color, #rrggbb
   background                            ; background color, #rrggbb
   size                                  ; size
-  boldp                                         ; whether face is bold
+  boldp                                 ; whether face is bold
   italicp                               ; whether face is italic
   underlinep                            ; whether face is underlined
   overlinep                             ; whether face is overlined
