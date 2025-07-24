@@ -1205,7 +1205,7 @@ If no rgb.txt file is found, return nil."
          (def (cond ((stringp raw-def) (list :foreground raw-def))
                     ((listp raw-def) raw-def)
                     (t
-                     (error "Face override must be %s, got %s"
+                     (error "Face override must be %s, got %S"
                             "an attribute list or string" raw-def)))))
     (and def
          (htmlize-attrlist-to-fstruct def (symbol-name face)))))
